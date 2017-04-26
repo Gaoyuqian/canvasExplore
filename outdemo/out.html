@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>html5+canvas随机绘图及坐标点击检测</title>
+    <style type="text/css">
+        #drawCanvas { border:1px solid #000000}
+
+    </style>
+
+<body>
+<canvas id='drawCanvas' width='300' height='300'></canvas>
+<input type="button" value="add"  onClick="addRandomCircle();">
+<input type="button" value="clear"  onClick="clearCanvas();">
+
+<script type="text/javascript">
+
+    var circles = [];
+    var canvas;
+    var context;
+
+    function Circle(x, y, radius, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.isSelected = false;
+    }
+
+    window.onload = function() {
+        canvas = document.getElementById("drawCanvas");
+        context = canvas.getContext("2d");
+
+        canvas.onmousedown = canvasClick;
+        canvas.onmouseup = stopDragging;
+        canvas.onmouseout = stopDragging;
+        canvas.onmousemove = dragCircle;
+    };
+
+    function addRandomCircle()
+    {
+        var radius= randomFromTo(10,60);
+        var x=randomFromTo(0,canvas.width);
+        var y=randomFromTo(0,canvas.height);
+        var colors=['green','blue','red','yellow','magenta','orange','brown','purple','pink'];
+        var color=colors[randomFromTo(0,8)];
+        var circle=new Circle(x,y,radius,color);
+        circles.push(circle);
+        drawCircles();
+
+    }
+
+    function drawCircles() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        for(var i=0; i<circles.length; i++) {
+            var circle = circles[i];
+            context.globalAlpha = 0.85;
+            context.beginPath();
+            context.arc(circle.x, circle.y, circle.radius, 0, Math.PI*2);
+            context.fillStyle = circle.color;
+            context.strokeStyle = "black";
+
+            if (circle.isSelected) {
+                context.lineWidth = 5;
+            }
+            else {
+                context.lineWidth = 1;
+            }
+            context.fill();
+            context.stroke();
+        }
+    }
+
+
+    var previousSelectedCircle;
+    function canvasClick(e) {
+        var clickX = e.pageX - canvas.offsetLeft;
+        var clickY = e.pageY - canvas.offsetTop;
+        for(var i=circles.length-1; i>=0; i--) {
+            var circle = circles[i];
+
+            var distanceFromCenter = Math.sqrt(Math.pow(circle.x - clickX, 2) + Math.pow(circle.y - clickY, 2))
+            if (distanceFromCenter <= circle.radius) {
+                if (previousSelectedCircle != null) previousSelectedCircle.isSelected = false;
+                previousSelectedCircle = circle;
+                circle.isSelected = true;
+                isDragging = true;
+
+                drawCircles();
+                return;
+            }
+        }
+    }
+
+
+
+    var isDragging = false;
+
+    function stopDragging() {
+        isDragging = false;
+    }
+
+    function dragCircle(e) {
+        if (isDragging == true) {
+            if (previousSelectedCircle != null) {
+                var x = e.pageX - canvas.offsetLeft;
+                var y = e.pageY - canvas.offsetTop;
+                previousSelectedCircle.x = x;
+                previousSelectedCircle.y = y;
+                drawCircles();
+            }
+        }
+    }
+
+
+    function clearCanvas()
+    {
+        circles = [];
+        drawCircles();
+    }
+    function randomFromTo(from, to) {
+        return Math.floor(Math.random() * (to - from + 1) + from);
+    }
+</script>
+</body>
+</html>
