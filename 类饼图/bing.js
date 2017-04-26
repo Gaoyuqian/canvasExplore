@@ -31,10 +31,6 @@ var bing = {
         var c1 = canvasa.getContext('2d');
         this.drawa(c, total, data);
         this.drawb(c1);
-        canvas.addEventListener('mousemove',function(e){
-            console.log(e.clientX-canvas.offsetLeft,e.clientY-canvas.offsetTop);
-            (c.isPointInPath(e.clientX-canvas.offsetLeft,e.clientY-canvas.offsetTop)||c.isPointInPath(e.clientX-canvas.offsetLeft,e.clientY-canvas.offsetTop))?console.log('110'):console.log('119');
-        })
 
     },
     drawa: function (c, total, data) {//画圆环图
