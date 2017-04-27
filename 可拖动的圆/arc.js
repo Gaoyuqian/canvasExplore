@@ -4,12 +4,12 @@
 
 
 var sxArray = [];
-var canvas = document.getElementById('shanxing');
+var canvas = document.getElementById('arc');
 var g = canvas.getContext('2d');
 //添加动画效果变成粒子特效
 
 
-function shanxing(x, y, radiu, color) {
+function arc(x, y, radiu, color) {
     this.x = x;
     this.y = y;
     this.radius = radiu;
@@ -24,20 +24,20 @@ function getCanvas(id) {
     return g;
 } //获取canvas节点
 
-function addShanXing() {
-    var shan = new shanxing(randomFromTo(0,1000), randomFromTo(0,1000), randomFromTo(0,10), '#ff5700');
+function addarc() {
+    var shan = new arc(randomFromTo(0,1000), randomFromTo(0,1000), randomFromTo(0,10), '#ff5700');
     sxArray.push(shan);
-    drawShanXing();
+    drawarc();
 }//添加扇形元素
 
-function drawShanXing() {
+function drawarc() {
     g.clearRect(0,0,1000,1000);
     for (var i = 0; i < sxArray.length; i++) {
-        var shanxing = sxArray[i];
+        var arc = sxArray[i];
         g.beginPath();
-        g.arc(shanxing.x, shanxing.y, shanxing.radius, 0, 2 * Math.PI);
-        g.fillStyle = shanxing.color;
-        g.strokeStyle = shanxing.color;
+        g.arc(arc.x, arc.y, arc.radius, 0, 2 * Math.PI);
+        g.fillStyle = arc.color;
+        g.strokeStyle = arc.color;
         g.fill();
         g.stroke();
     }
@@ -57,15 +57,15 @@ function clickEvent(e){
     var clickX = e.pageX - canvas.offsetLeft;
     var clickY = e.pageY - canvas.offsetTop;
     for(var i = sxArray.length - 1;i>=0;i--){
-        var shanxing = sxArray[i];
-        var distanceFromCenter = Math.sqrt(Math.pow(shanxing.x - clickX,2) + Math.pow(shanxing.y - clickY,2))
+        var arc = sxArray[i];
+        var distanceFromCenter = Math.sqrt(Math.pow(arc.x - clickX,2) + Math.pow(arc.y - clickY,2))
 
-        if(distanceFromCenter<=shanxing.radius){//判断点击位置是否在某个圆内
+        if(distanceFromCenter<=arc.radius){//判断点击位置是否在某个圆内
             if(defaultSelect!=null){
                 defaultSelect.isSelected = false;//还原上一个点击的圆的选中状态为false
             }
-            defaultSelect = shanxing;
-            shanxing.isSelected = true; //若在 改变对象的属性
+            defaultSelect = arc;
+            arc.isSelected = true; //若在 改变对象的属性
             moving = true;
         }
     }
@@ -81,7 +81,7 @@ function moveEvent(e){
             defaultSelect.x=x;
             defaultSelect.y=y;
 
-            drawShanXing();
+            drawarc();
 
 
         }
@@ -92,7 +92,7 @@ function outEvent(){
 }
 
 window.onload = function(){
-   setInterval(addShanXing,1000);
+   setInterval(addarc,1000);
     canvas.onmousedown = clickEvent;
     canvas.onmousemove = moveEvent;
     canvas.onmouseout = outEvent;
