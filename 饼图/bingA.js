@@ -94,8 +94,19 @@ function drawBing(arg) {
         g.beginPath();
         g.moveTo(line.NBx||line.Bx,line.NBy||line.By);
         g.lineTo(line.Ex,line.Ey);
+        if(line.Ey>(line.NBy||line.By)){//在一二象限
+            g.lineTo(line.Ex-10,line.Ey);
+        }else if(line.Ey>(line.NBy||line.By)){//在三四象限
+            g.lineTo(line.Ex+10,line.Ey);
+        }else{
+            g.lineTo(line.Ex,line.Ey-10);
+        }
         g.strokeStyle = line.color;
         g.stroke();
+        console.log(lArray)
+
+
+        //判断Ex和Ey 的象限来确定是横线的加减关系，
     }
 
 
