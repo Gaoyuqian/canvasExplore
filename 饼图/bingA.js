@@ -2,6 +2,9 @@
  * Created by yuqiangao on 2017/4/27.
  *
  * 画一个饼图
+ *
+ *
+ * 后期加浮窗和数值显示
  */
 var bArray = [];
 var lArray = [];
