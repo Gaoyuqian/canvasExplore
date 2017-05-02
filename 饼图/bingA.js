@@ -11,10 +11,11 @@
 
 var bArray = [];
 var lArray = [];
-var tArray = [];
 var colorArray = ['red', 'orange', 'blue', 'black', 'grey', 'green']
 var canvas = document.getElementById('bingA');
 var g = canvas.getContext('2d');
+var total = 0;
+
 function getBing(x, y, radius, color, value, name) {
     this.x = x;
     this.y = y;
@@ -42,20 +43,9 @@ function getLine(x, y, deg, length, color) {
 }
 
 
-function drawLine(deg) {
-
-}
-
-
-//接受对象为参数
-function drawText() {
-
-}
-
-var total = 0;
-function drawBing(arg) {
+function drawBing(arg,move) {
     var temp = 0;//负责接收上一个
-    g.clearRect(0, 0, 1000, 1000);
+    g.clearRect(0, 0, canvas.width, canvas.height);
 
 
     if (typeof arg == 'object') {
@@ -108,13 +98,10 @@ function drawBing(arg) {
         //判断Ex和Ey 的象限来确定是横线的加减关系，
     }
 
-
+   if(move){
+       canvas.onmousedown = moveEvent;
+   }
 }
-
-
-function randomFromTo(from, to) {
-    return Math.floor(Math.random() * (to - from + 1) + from);
-}//获取随机坐标
 
 
 function moveEvent(e) {
@@ -179,6 +166,5 @@ window.onload = function () {
     drawBing([{'name': '蚂蚁', 'value': 3333}, {'name': '饿了么', 'value': 3333}, {
         'name': '百度',
         'value': 2222
-    }, {'name': '京东', 'value': 5555}, {'name': '淘宝', 'value': 2342}, {'name': '知乎', 'value': 3212}])
-    canvas.onmousedown = moveEvent;
+    }, {'name': '京东', 'value': 5555}, {'name': '淘宝', 'value': 2342}, {'name': '知乎', 'value': 3212}],true);
 }
