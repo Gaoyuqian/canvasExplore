@@ -12,7 +12,7 @@
 var bArray = [];
 var lArray = [];
 var tArray = [];
-var colorArray = ['red', 'orange', 'yellow', 'black', 'grey', 'green']
+var colorArray = ['red', 'orange', 'blue', 'black', 'grey', 'green']
 var canvas = document.getElementById('bingA');
 var g = canvas.getContext('2d');
 function getBing(x, y, radius, color, value, name) {
@@ -28,7 +28,7 @@ function getBing(x, y, radius, color, value, name) {
 }
 
 
-function getLine(x,y,deg,length,color){
+function getLine(x, y, deg, length, color) {
 
     this.Bx = x;
     this.By = y;
@@ -36,20 +36,19 @@ function getLine(x,y,deg,length,color){
     this.NBy = 0;
     this.deg = deg;//角度
     this.length = length;//长度
-    this.Ex = x +length*Math.cos(deg);
-    this.Ey = y +length*Math.sin(deg);
+    this.Ex = x + length * Math.cos(deg);
+    this.Ey = y + length * Math.sin(deg);
     this.color = color;
 }
 
 
-
-function drawLine(deg){
+function drawLine(deg) {
 
 }
 
 
 //接受对象为参数
-function drawText(){
+function drawText() {
 
 }
 
@@ -59,7 +58,6 @@ function drawBing(arg) {
     g.clearRect(0, 0, 1000, 1000);
 
 
-
     if (typeof arg == 'object') {
         for (let i of arg) {
             total += i.value;
@@ -67,9 +65,6 @@ function drawBing(arg) {
             colorArray.pop();
         }
     }
-
-
-
 
 
     for (let i in bArray) {
@@ -83,32 +78,35 @@ function drawBing(arg) {
         temp = (bArray[i].value / total * 2) + temp;
 
 
-
-
         //drawLine
-        var deg = ( bArray[i].end-parseInt( bArray[i].end -  bArray[i].begin) / 2)*Math.PI/180;
-        if(lArray.length<bArray.length){
-            lArray.push(new getLine(bArray[i].x,bArray[i].y,deg,150,bArray[i].color));
+        var deg = ( bArray[i].end - parseInt(bArray[i].end - bArray[i].begin) / 2) * Math.PI / 180;
+        if (lArray.length < bArray.length) {
+            lArray.push(new getLine(bArray[i].x, bArray[i].y, deg, 150, bArray[i].color));
         }
-        var line  = lArray[i];
+        var line = lArray[i];
         g.beginPath();
-        g.moveTo(line.NBx||line.Bx,line.NBy||line.By);
-        g.lineTo(line.Ex,line.Ey);
-        if(line.Ey>(line.NBy||line.By)){//在一二象限
-            g.lineTo(line.Ex-10,line.Ey);
-        }else if(line.Ey>(line.NBy||line.By)){//在三四象限
-            g.lineTo(line.Ex+10,line.Ey);
-        }else{
-            g.lineTo(line.Ex,line.Ey-10);
+        g.moveTo(line.NBx || line.Bx, line.NBy || line.By);
+        g.lineTo(line.Ex, line.Ey);
+        if (line.Ex > (line.NBx || line.Bx)) {//在一二象限
+            g.lineTo(line.Ex + 10, line.Ey);
+            g.font = '20px';
+            g.fillStyle = bArray[i].color;
+            g.fillText(bArray[i].name, line.Ex + 15, line.Ey + 5);
+
+        } else if (line.Ex < (line.NBx || line.Bx)) {//在三四象限
+            g.lineTo(line.Ex - 10, line.Ey);
+            g.font = '20px';
+            g.fillStyle = bArray[i].color;
+            g.fillText(bArray[i].name, line.Ex - 10 - (bArray[i].name.length+1) * 10, line.Ey+5);
+
         }
         g.strokeStyle = line.color;
         g.stroke();
-        console.log(lArray)
+        //console.log(lArray);
 
 
         //判断Ex和Ey 的象限来确定是横线的加减关系，
     }
-
 
 
 }
@@ -143,13 +141,11 @@ function moveEvent(e) {
             var angleX = Math.atan(XformO / YformO) * 180 / Math.PI;
 
 
-
             if (YformO >= 0 && XformO >= 0 || YformO >= 0 && XformO < 0) {//第一、二象限
                 angle = 90 - angleX;
             } else if (YformO <= 0 && XformO >= 0 || YformO <= 0 && XformO < 0) {//第三、四象限
                 angle = 90 - angleX + 180
             }
-
 
 
             if (angle >= bing.begin && (angle <= bing.end)) {//判断点击区域是否在扇形区域内
@@ -160,11 +156,9 @@ function moveEvent(e) {
             }
 
 
-
-
             if (bing.isSelected) {//选中后重新画
-                bing.newX = bing.x + 20 * Math.cos((bing.end-parseInt(bing.end - bing.begin) / 2)*Math.PI / 180);
-                bing.newY = bing.y + 20 * Math.sin((bing.end-parseInt(bing.end - bing.begin) / 2)*Math.PI / 180);
+                bing.newX = bing.x + 20 * Math.cos((bing.end - parseInt(bing.end - bing.begin) / 2) * Math.PI / 180);
+                bing.newY = bing.y + 20 * Math.sin((bing.end - parseInt(bing.end - bing.begin) / 2) * Math.PI / 180);
                 line.NBx = bing.newX;
                 line.NBy = bing.newY;
             } else {
@@ -175,10 +169,6 @@ function moveEvent(e) {
             }
 
 
-
-
-
-
         }
     }
     drawBing();
@@ -186,6 +176,9 @@ function moveEvent(e) {
 
 
 window.onload = function () {
-    drawBing([{'name': '测试1', 'value': 3333},{'name': '测试1', 'value': 2222}, {'name': '测试1', 'value': 5555},{'name': '测试3', 'value': 2342}, {'name': '测试3', 'value': 3212}])
+    drawBing([{'name': '蚂蚁', 'value': 3333}, {'name': '饿了么', 'value': 3333}, {
+        'name': '百度',
+        'value': 2222
+    }, {'name': '京东', 'value': 5555}, {'name': '淘宝', 'value': 2342}, {'name': '知乎', 'value': 3212}])
     canvas.onmousedown = moveEvent;
 }
