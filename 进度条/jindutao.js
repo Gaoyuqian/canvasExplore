@@ -26,7 +26,6 @@ var JDT = {
             JDT.drawJ(c, JDT.format(first), JDT.format(end), now, WZ)
         }, 20);
         canvas.addEventListener('mousemove',function(e){
-            console.log(e.clientX-canvas.offsetLeft,e.clientY-canvas.offsetTop);
             (c.isPointInPath(e.clientX-canvas.offsetLeft-40,e.clientY-canvas.offsetTop-40)||c.isPointInPath(e.clientX-canvas.offsetLeft+40,e.clientY-canvas.offsetTop+40))?JDT.drawText(c1,text,JDT.biaoshi):JDT.changeBiaoShi(c1,JDT.biaoshi);
         })
     },

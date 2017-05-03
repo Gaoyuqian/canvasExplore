@@ -8,7 +8,7 @@ var bing = {
 
     init: function (data) {
         /*构思
-         1.接受参数为对象，对象的值为  {name:value,point:value}
+         1.接受参数为对象，对象的值为  [{name:value,point:value}]
          2.分多个阶段画圆，每一个对象中的值对应一部分圆形线条，按百分比计算对应的大小
          3.实现时，多个圆同时开始绘画，颜色随机或枚举。预计使用定时器。
          4.适配不同场景。
@@ -55,4 +55,10 @@ var bing = {
         c1.fill();
 
     }
+}
+window.onload = function(){
+    bing.init([{'name': '蚂蚁金服', 'value': 3333}, {'name': '饿了么', 'value': 3333}, {
+        'name': '百度贴吧',
+        'value': 2222
+    }])
 }
