@@ -99,10 +99,8 @@ function drawPoint() {
 function getMax(arg) {
     var temp = arg[0];
     for (var i = 0; i < arg.length - 1; i++) {
-        if (temp > arg[i + 1]) {
-            break;
-        } else {
-            temp = arg[i + 1];
+        if (temp <= arg[i]) {
+            temp = arg[i];
         }
     }
     return temp;
@@ -111,10 +109,8 @@ function getMax(arg) {
 function getMin(arg) {
     var temp = arg[0];
     for (var i = 0; i < arg.length - 1; i++) {
-        if (temp < arg[i + 1]) {
-            break;
-        } else {
-            temp = arg[i + 1];
+        if (temp>=arg[i] ) {
+            temp = arg[i];
         }
     }
     return temp;
