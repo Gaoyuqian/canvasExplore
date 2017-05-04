@@ -3,16 +3,16 @@
  */
 
 /*
-*   需要找到坐标和折线的关系 适配不同环境
-*   支持多个数组存放在一张图上
-*
-*
-*
-*/
+ *   需要找到坐标和折线的关系 适配不同环境
+ *   支持多个数组存放在一张图上
+ *
+ *
+ *
+ */
 var test = {
-    O: {'x': 100, 'y': 900}, //坐标系中心
-    offset: {'x': 700, 'y': 300},//坐标系长度
-    info: {'name1': [44, 133, 144, 21, 155, 11, 33, 35]}//数据存放数组 核心
+    O: {'x': 100, 'y': 900}, //坐标系中心  和画布大小有关
+    offset: {'x': 700, 'y': 500},//坐标系长度  和最大值最小值有关
+    info: {'name1': [122, 163, 144, 222, 322, 222, 153, 231]}//数据存放数组 核心
 }
 
 //获取最大最小值
@@ -41,61 +41,60 @@ function drawZuobiao(arg) {
     drawXuxian();
     //解决获取最大值最小值问
     drawZhexian(arg);
+    drawPoint(arg);
 
 }
 
-function drawXuxian() {
+function drawXuxian(moving) {
     g.beginPath();
     var i = 0;
     var j = 0;
 
-    var maxTime = setInterval(function(){
-        if(i<test.offset.x){
-            g.moveTo(i, -max - offset);
-            g.lineTo(i + 10, -max - offset);
+    var maxTime = setInterval(function () {
+        if (i < test.offset.x) {
+            g.moveTo(i, -max);
+            g.lineTo(i + 10, -max);
             g.strokeStyle = 'black';
             g.stroke();
-            i+=30;
-        }else{
+            i += 30;
+        } else {
             g.fillStyle = 'red'
-            g.fillText(max,i+10, -max - offset + 5);
+            g.fillText(max, i + 10, -max + 5);
             clearInterval(maxTime);
         }
-    },700/30)
-
+    }, 700 / 30)
 
     g.beginPath();
-
-    var minTime = setInterval(function(){
-        if(j<test.offset.x){
-            g.moveTo(j, -min - offset);
-            g.lineTo(j + 10, -min - offset);
+    var minTime = setInterval(function () {
+        if (j < test.offset.x) {
+            g.moveTo(j, -min);
+            g.lineTo(j + 10, -min);
             g.strokeStyle = 'black';
             g.stroke();
-            j+=30;
-        }else{
+            j += 30;
+        } else {
             g.fillStyle = 'red'
-            g.fillText(min, j+10, -min - offset + 5);
+            g.fillText(min, j + 10, -min + 5);
 
             clearInterval(minTime);
         }
-    },700/30)
+    }, 700 / 30)
 }
 
 
 function drawZhexian(arg) {
     gg.beginPath();
     gg.translate(arg.O.x, arg.O.y);
-    var i  =0;
-    setInterval(function(){
-        if(i<arg.info.name1.length){
-            gg.lineTo((parseInt(i)) * 100, -arg.info.name1[(parseInt(i))] - offset);
+    var i = 0;
+    setInterval(function () {
+        if (i < arg.info.name1.length) {
+            gg.lineTo((parseInt(i)) * 100, -arg.info.name1[(parseInt(i))]);
             i++;
             gg.lineWidth = '1';
             gg.strokeStyle = 'blue';
             gg.stroke();
         }
-    },70)
+    }, 70)
 }
 function drawKedu() {
     g.beginPath();
@@ -104,7 +103,7 @@ function drawKedu() {
         g.lineTo(-10, -i);
         g.font = '20px';
         g.fillStyle = 'black';
-        g.fillText(i - 100, -35, -i + 5)
+        g.fillText(i, -35, -i+5)
     }
     for (var i = 100; i <= test.offset.x; i += 100) {
         g.moveTo(i, 0);
@@ -117,8 +116,40 @@ function drawKedu() {
 }
 
 
-function drawPoint() {
+function drawPoint(arg) {
+
+    gg.beginPath();
+    var i = 0;
+    setInterval(function () {
+        if (i < arg.info.name1.length) {
+            gg.arc((parseInt(i+1)) * 100, -arg.info.name1[(parseInt(i+1))], 1, 0, 2 * Math.PI);
+            i++;
+            gg.strokeStyle = 'red';
+            gg.srtoke();
+        }
+    }, 70)
+
+}
+
+
+function isPointOnLine(e) {
     g.beginPath();
+
+    for (var i = 0; i < test.info.name1.length; i++) {
+        if ((-e.pageY + test.O.y) == test.info.name1[i]) {
+            g.clearRect(0, -1000, 1000, 1000)
+            g.restore();
+            for (var j = 0; j < test.offset.x; j += 30) {
+                g.moveTo(j, -(-e.pageY + test.O.y));
+                g.lineTo(j + 10, -(-e.pageY + test.O.y));
+                g.strokeStyle = '#ff5700';
+                g.stroke();
+            }
+            g.font = '20px';
+            g.fillStyle = 'red';
+            g.fillText(test.info.name1[i], test.offset.x + 30, -test.info.name1[i] + 5)
+        }
+    }
 
 }
 
@@ -135,7 +166,7 @@ function getMax(arg) {
 function getMin(arg) {
     var temp = arg[0];
     for (var i = 0; i < arg.length - 1; i++) {
-        if (temp>=arg[i] ) {
+        if (temp >= arg[i]) {
             temp = arg[i];
         }
     }
@@ -145,4 +176,7 @@ function getMin(arg) {
 
 window.onload = function () {
     drawZuobiao(test);
+    setTimeout(function(){
+        window.onmousemove = isPointOnLine;
+    },1000)
 }
