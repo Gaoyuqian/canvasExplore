@@ -2,11 +2,17 @@
  * Created by yuqiangao on 2017/5/2.
  */
 
-
+/*
+*   需要找到坐标和折线的关系 适配不同环境
+*   支持多个数组存放在一张图上
+*
+*
+*
+*/
 var test = {
     O: {'x': 100, 'y': 900}, //坐标系中心
-    offset: {'x': 700, 'y': 500},//坐标系长度 随info长度而变化
-    info: {'name1': [44, 133, 144, 21, 155, 11, 33, 35]},//数据存放数组 核心
+    offset: {'x': 700, 'y': 300},//坐标系长度
+    info: {'name1': [44, 133, 144, 21, 155, 11, 33, 35]}//数据存放数组 核心
 }
 
 //获取最大最小值
@@ -17,7 +23,6 @@ var canvas1 = document.getElementById('zhexian1');
 var gg = canvas1.getContext('2d');
 var max = getMax(test.info.name1);
 var min = getMin(test.info.name1);
-var xuxianLength = 10;
 var offset = 100
 function drawZuobiao(arg) {
     g.beginPath();
@@ -41,34 +46,40 @@ function drawZuobiao(arg) {
 
 function drawXuxian() {
     g.beginPath();
-    for (var i = 0; i < test.offset.x; i += 30) {
-        g.moveTo(i, -max - offset);
-        g.lineTo(i + 10, -max - offset);
-        g.lineWidth = '1';
-    }
-    g.font = '20px';
-    g.fillStyle = 'red'
-    g.fillText(max, test.offset.x+10, -max - offset + 5);
-    g.strokeStyle = 'black';
-    g.stroke();
+    var i = 0;
+    var j = 0;
 
-
-
-
-
+    var maxTime = setInterval(function(){
+        if(i<test.offset.x){
+            g.moveTo(i, -max - offset);
+            g.lineTo(i + 10, -max - offset);
+            g.strokeStyle = 'black';
+            g.stroke();
+            i+=30;
+        }else{
+            g.fillStyle = 'red'
+            g.fillText(max,i+10, -max - offset + 5);
+            clearInterval(maxTime);
+        }
+    },700/30)
 
 
     g.beginPath();
-    for (var i = 0; i < test.offset.x; i += 30) {
-        g.moveTo(i, -min - offset);
-        g.lineTo(i + 10, -min - offset);
-        g.lineWidth = '1';
-    }
-    g.font = '20px';
-    g.fillStyle = 'red'
-    g.fillText(min, test.offset.x+10, -min - offset + 5);
-    g.strokeStyle = 'black';
-    g.stroke();
+
+    var minTime = setInterval(function(){
+        if(j<test.offset.x){
+            g.moveTo(j, -min - offset);
+            g.lineTo(j + 10, -min - offset);
+            g.strokeStyle = 'black';
+            g.stroke();
+            j+=30;
+        }else{
+            g.fillStyle = 'red'
+            g.fillText(min, j+10, -min - offset + 5);
+
+            clearInterval(minTime);
+        }
+    },700/30)
 }
 
 
