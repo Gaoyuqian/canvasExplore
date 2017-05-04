@@ -45,7 +45,7 @@ function drawZuobiao(arg) {
 
 }
 
-function drawXuxian(moving) {
+function drawXuxian() {
     g.beginPath();
     var i = 0;
     var j = 0;
@@ -103,7 +103,7 @@ function drawKedu() {
         g.lineTo(-10, -i);
         g.font = '20px';
         g.fillStyle = 'black';
-        g.fillText(i, -35, -i+5)
+        g.fillText(i, -35, -i + 5)
     }
     for (var i = 100; i <= test.offset.x; i += 100) {
         g.moveTo(i, 0);
@@ -122,7 +122,7 @@ function drawPoint(arg) {
     var i = 0;
     setInterval(function () {
         if (i < arg.info.name1.length) {
-            gg.arc((parseInt(i+1)) * 100, -arg.info.name1[(parseInt(i+1))], 1, 0, 2 * Math.PI);
+            gg.arc((parseInt(i + 1)) * 100, -arg.info.name1[(parseInt(i + 1))], 1, 0, 2 * Math.PI);
             i++;
             gg.strokeStyle = 'red';
             gg.srtoke();
@@ -176,7 +176,7 @@ function getMin(arg) {
 
 window.onload = function () {
     drawZuobiao(test);
-    setTimeout(function(){
+    setTimeout(function () {
         window.onmousemove = isPointOnLine;
-    },1000)
+    }, 1000)
 }
