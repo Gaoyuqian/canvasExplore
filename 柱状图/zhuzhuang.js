@@ -6,7 +6,7 @@
 var test = {
     o: {'x': 100, 'y': 700},
     offset: {'x': 700, 'y': 400},
-    rectWidth: 100,
+    rectWidth: 70,
     jianju: 10,
     beishu: 1,
     info: [{'name': '淘宝', 'value': 220}, {'name': '淘宝', 'value': 220}, {'name': '淘宝', 'value': 220}, {
@@ -26,7 +26,7 @@ function getEect(x, y, width, height, color, name) {
     this.height = height;
     this.color = color;
     this.name = name;
-    this.value ='';
+    this.value = '';
     this.isSelect = false;
 }
 
@@ -56,9 +56,9 @@ function drawKedu() {
     g.beginPath();
     for (var i = 0; i < rectArray.length; i++) {
         g.moveTo(rectArray[i].x, 0)
-        g.lineTo(rectArray[i].x + rectArray[i].width, -5)
-        g.moveTo(rectArray[i].x + rectArray[i].width, 0)
-        g.lineTo(rectArray[i].x + rectArray[i].width, -5)
+        g.lineTo(rectArray[i].x + rectArray[i].width, -5);
+        g.moveTo(rectArray[i].x + rectArray[i].width, 0);
+        g.lineTo(rectArray[i].x + rectArray[i].width, -5);
         g.strokeStyle = 'red';
         g.stroke();
     }
@@ -77,29 +77,34 @@ function drawKedu() {
 }
 
 function drawRect(first) {
-    for (var i = 0; i < rectArray.length; i++) {
-        g.beginPath();
-        g.fillStyle = !rectArray[i].isSelect ? rectArray[i].color : 'red';
-        g.fillRect(rectArray[i].x, rectArray[i].y, rectArray[i].width, rectArray[i].height);
 
-
-
-
-        //g.beginPath();
-        //g.fillStyle = 'black'
-        //g.fillText(rectArray[i].value, rectArray[i].x + (rectArray[i].width-g.measureText(rectArray[i].x).width)/2, rectArray[i].y - 10)
-
-
-
-
+    for (let i = 0; i < rectArray.length; i++) {
+            g.beginPath();
+            g.fillStyle = !rectArray[i].isSelect ? rectArray[i].color : 'red';
+            g.fillRect(rectArray[i].x, rectArray[i].y, rectArray[i].width, rectArray[i].height);
+        //首次动画
         if (!first) {
             g.beginPath();
             g.fillStyle = 'grey';
             g.fillText(test.info[i].name, (i + 1) * (test.rectWidth + test.jianju) + (test.rectWidth - g.measureText(test.info[i].name).width) / 2, 15)
         }
     }
+
+
 }
 
+function testF(i) {
+
+    var j = 0;
+    g.beginPath();
+    g.fillStyle = rectArray[i].color;
+    if (j <= rectArray[i].height) {
+        g.fillRect(rectArray[i].x, -j, rectArray[i].width, j);
+        j++;
+        console.log(j, rectArray[i].height)
+    }
+
+}
 
 
 function mousemoving(e) {
@@ -109,14 +114,13 @@ function mousemoving(e) {
 
 
     for (var i = 0; i < rectArray.length; i++) {
-        //坐标计算错误
         rectArray[i].isSelect = false;
 
         if ((movX > rectArray[i].x && movX < rectArray[i].x + rectArray[i].width) && (movX > 0 && movY < -rectArray[i].y)) {
 
 
             rectArray[i].isSelect = true;
-            rectArray[i].value =  rectArray[i].height;
+            rectArray[i].value = rectArray[i].height;
 
         }
 
