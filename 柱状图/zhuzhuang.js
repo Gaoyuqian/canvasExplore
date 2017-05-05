@@ -79,9 +79,9 @@ function drawKedu() {
 function drawRect(first) {
 
     for (let i = 0; i < rectArray.length; i++) {
-            g.beginPath();
-            g.fillStyle = !rectArray[i].isSelect ? rectArray[i].color : 'red';
-            g.fillRect(rectArray[i].x, rectArray[i].y, rectArray[i].width, rectArray[i].height);
+        g.beginPath();
+        g.fillStyle = !rectArray[i].isSelect ? rectArray[i].color : 'red';
+        g.fillRect(rectArray[i].x, rectArray[i].y, rectArray[i].width, rectArray[i].height);
         //首次动画
         if (!first) {
             g.beginPath();
@@ -89,45 +89,19 @@ function drawRect(first) {
             g.fillText(test.info[i].name, (i + 1) * (test.rectWidth + test.jianju) + (test.rectWidth - g.measureText(test.info[i].name).width) / 2, 15)
         }
     }
-
-
 }
-
-function testF(i) {
-
-    var j = 0;
-    g.beginPath();
-    g.fillStyle = rectArray[i].color;
-    if (j <= rectArray[i].height) {
-        g.fillRect(rectArray[i].x, -j, rectArray[i].width, j);
-        j++;
-        console.log(j, rectArray[i].height)
-    }
-
-}
-
 
 function mousemoving(e) {
-
     var movX = Math.abs(e.pageX - canvas.offsetLeft - test.o.x);
     var movY = Math.abs(e.pageY - canvas.offsetTop - test.o.y);
-
-
     for (var i = 0; i < rectArray.length; i++) {
         rectArray[i].isSelect = false;
-
         if ((movX > rectArray[i].x && movX < rectArray[i].x + rectArray[i].width) && (movX > 0 && movY < -rectArray[i].y)) {
-
-
             rectArray[i].isSelect = true;
             rectArray[i].value = rectArray[i].height;
-
         }
-
         drawRect(true);
     }
-
-
 }
 
 window.onload = function () {
