@@ -124,8 +124,6 @@ function drawPoint(arg) {
         if (i < arg.info.name1.length) {
             gg.arc((parseInt(i + 1)) * 100, -arg.info.name1[(parseInt(i + 1))], 1, 0, 2 * Math.PI);
             i++;
-            gg.strokeStyle = 'red';
-            gg.srtoke();
         }
     }, 70)
 
