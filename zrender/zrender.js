@@ -104,23 +104,26 @@ function newArc() {
 
     var arc = new createArc(canvas.width / 2, 4 * canvas.height / 5, 25, color[getRandom(0, 3)], 'in');
     arcArray.push(arc);
-    drawArc(arcArray);
+    drawArc(arcArray,1);
 }
 
 
-function drawArc(arg) {
+function drawArc(arg,key) {
     gg.clearRect(0, 0, 2000, 2000);
     for (i in arg) {
         gg.beginPath();
         gg.strokeStyle = arg[i].color;
         gg.arc(arg[i].x, arg[i].y, arg[i].r, 0, 2 * Math.PI);
         gg.stroke();
-
     }
     gg.beginPath();
     gg.font = '10px Verdana';
     gg.fillStyle = 'gold'
-    gg.fillText('begin', canvas.width / 2 - 16, 4 * canvas.height / 5 + 4)
+    if(key == 1){
+        gg.fillText('begin', canvas.width / 2 - 16, 4 * canvas.height / 5 + 4)
+    }else{
+        gg.fillText('next', canvas.width / 2 - 13, 4 * canvas.height / 5 + 4)
+    }
 }
 
 
@@ -166,7 +169,7 @@ function mouseMovingFirst(e) {
                 redrawArc(arcArray);
             }
         } else {
-            drawArc(arcArray);
+            drawArc(arcArray,1);
 
         }
     }
@@ -182,11 +185,10 @@ function mouseClickFirst(e) {
             if (arc.name == 'in') {
                 g.clearRect(0, 0, 2000, 2000);
                 gg.clearRect(0, 0, 2000, 2000);
-                window.onmousemove = mouseClickSecond;
-                window.onclick = '';
+                window.onmousemove = mousemovingSecond;
+                window.onclick = mouseClickSecond;
                 lineArray = [];
                 textArray = [];
-                arcArray = [];
                 clearInterval(first);
 
 
@@ -224,14 +226,13 @@ function newTextSecond() {
         x = 30;
 
     }
-    console.log(g.measureText(textArray[0].text).width);
     drawTextSecond(textArray);
     if (count1 > secondText.length) {
+        drawArc(arcArray,2)
         clearInterval(second);
     }
 }
 function drawTextSecond(arg) {
-    console.log(arg);
     g.clearRect(0, 0, 2000, 2000);
     for (i in arg) {
         g.beginPath();
@@ -243,7 +244,41 @@ function drawTextSecond(arg) {
 
 
 function mouseClickSecond(e) {
+    var clickX = e.pageX - canvas.offsetLeft;
+    var clickY = e.pageY - canvas.offsetTop;
+    for (i in arcArray) {
+        var arc = arcArray[i];
+        var distanceFromCenter = Math.sqrt(Math.pow(arc.x - clickX, 2) + Math.pow(arc.y - clickY, 2))
+        if (distanceFromCenter <= arc.r) {
+            if (arc.name == 'in') {
+                g.clearRect(0, 0, 2000, 2000);
+                gg.clearRect(0, 0, 2000, 2000);
+                window.onmousemove = '';
+                window.onclick = '';
+                lineArray = [];
+                textArray = [];
+                clearInterval(second);
+            }
+        }
+    }
+}
+function mousemovingSecond(e){
+    var clickX = e.pageX - canvas.offsetLeft;
+    var clickY = e.pageY - canvas.offsetTop;
 
+    for (i in arcArray) {
+        var arc = arcArray[i];
+        var distanceFromCenter = Math.sqrt(Math.pow(arc.x - clickX, 2) + Math.pow(arc.y - clickY, 2))
+        if (distanceFromCenter <= arc.r) {
+            if (arc.name == 'in') {
+                arc.color = 'orange';
+                redrawArc(arcArray);
+            }
+        } else {
+            drawArc(arcArray,2);
+
+        }
+    }
 }
 
 
