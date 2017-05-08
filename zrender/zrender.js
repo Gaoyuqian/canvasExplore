@@ -28,6 +28,8 @@ function CreateText(text, size, color) {
     this.size = size;
     this.color = color;
     this.text = text;
+    this.height = height;
+    this.x = x ;
 }//文字
 
 
@@ -151,7 +153,7 @@ function redrawArc(arg) {
 //鼠标事件
 
 
-function mouseMoving(e) {
+function mouseMovingFirst(e) {
     var clickX = e.pageX - canvas.offsetLeft;
     var clickY = e.pageY - canvas.offsetTop;
 
@@ -170,11 +172,9 @@ function mouseMoving(e) {
     }
 }
 
-function mouseClick(e) {
+function mouseClickFirst(e) {
     var clickX = e.pageX - canvas.offsetLeft;
     var clickY = e.pageY - canvas.offsetTop;
-
-
     for (i in arcArray) {
         var arc = arcArray[i];
         var distanceFromCenter = Math.sqrt(Math.pow(arc.x - clickX, 2) + Math.pow(arc.y - clickY, 2))
@@ -182,9 +182,16 @@ function mouseClick(e) {
             if (arc.name == 'in') {
                 g.clearRect(0, 0, 2000, 2000);
                 gg.clearRect(0, 0, 2000, 2000);
-                window.onmousemove = '';
+                window.onmousemove = mouseClickSecond;
                 window.onclick = '';
+                lineArray = [];
+                textArray = [];
+                arcArray = [];
                 clearInterval(first);
+
+
+                second = setInterval(newTextSecond, 100);
+
             }
         }
     }
@@ -194,18 +201,50 @@ function mouseClick(e) {
 //end
 
 
-//公共方法部分
+//  ---------第一页end---------
 
 
-function getRandom(from, to) {
-    return Math.floor(Math.random() * (to - from + 1) + from);
-}//获取随机坐标
-function remove(arg, index) {
-    arg.splice(index, 1);
+//  ---------第二页start----------
+//  canvas和svg的区别
+
+var secondText = '阿斯顿咖啡机阿莱克斯大家发牢骚的风景啊索朗多吉法律，圣诞节发生了看大家发牢骚肯德基法律考试江东父老卡技术的六块腹肌阿斯利康的风景离开';
+var count1 = 0;
+var count2 = 0;
+var height = 50;
+var x =30;
+function newTextSecond() {
+    var text = new CreateText(secondText.substring(count1, count1 + 1), 30, 'red');
+    count1++;
+    count2++;
+    textArray.push(text);
+    x+=30;
+    if ((count2+1) * 30 > canvas.width-30) {
+        height+=30;
+        count2 = 0;
+        x = 30;
+
+    }
+    console.log(g.measureText(textArray[0].text).width);
+    drawTextSecond(textArray);
+    if (count1 > secondText.length) {
+        clearInterval(second);
+    }
+}
+function drawTextSecond(arg) {
+    console.log(arg);
+    g.clearRect(0, 0, 2000, 2000);
+    for (i in arg) {
+        g.beginPath();
+        g.font = arg[i].size + "px Verdana";
+        g.fillStyle = arg[i].color;
+        g.fillText(arg[i].text,arg[i].x, arg[i].height);
+    }
 }
 
 
-//公共方法结束
+function mouseClickSecond(e) {
+
+}
 
 
 window.onload = function () {
@@ -216,8 +255,8 @@ window.onload = function () {
     }, 30)
 
 
-    window.onmousemove = mouseMoving;
-    window.onclick = mouseClick;
+    window.onmousemove = mouseMovingFirst;
+    window.onclick = mouseClickFirst;
 
 }
 
