@@ -6,12 +6,10 @@
  */
 var canvas = document.getElementById('zrender');
 var g = canvas.getContext('2d');
-var canvas1 = document.getElementById('yanhua');
-var gg = canvas1.getContext('2d');
 var body = document.getElementsByTagName('body');
 //zrender动画开始
 var lineArray = [];
-var color = ['red', 'green', 'orange', 'black'];
+var color = ['red', 'green', 'orange', 'gold'];
 function Line(y, length, color, speed) {
     this.y = y;
     this.x = 0;
@@ -20,7 +18,7 @@ function Line(y, length, color, speed) {
     this.speed = speed;
 }
 function newLine() {
-    var newline = new Line(getRandom(0, canvas.height), getRandom(20, 100), color[getRandom(0, 3)], getRandom(5, 50));
+    var newline = new Line(getRandom(0, canvas.height), getRandom(30, 150), color[getRandom(0, 3)], getRandom(5, 50));
     lineArray.push(newline);
     drawLine(lineArray)
 }
@@ -49,8 +47,6 @@ function drawLine(arg) {
 //公共方法部分
 
 
-
-
 function getRandom(from, to) {
     return Math.floor(Math.random() * (to - from + 1) + from);
 }//获取随机坐标
@@ -59,31 +55,9 @@ function remove(arg, index) {
 }
 
 
-
 //公共方法结束
 
 
-//烟花效果开始
-
-var yanhua = [];
-
-
-function yanhua(x,y,length,color,speed){
-
-
-    this.x = x;
-    this.y = y;
-    this.length = length;
-    this.color = color;
-    this.speed = speed;
-
-}
-
-
-
-
-
-//烟花效果结束
 
 window.onload = function () {
 
