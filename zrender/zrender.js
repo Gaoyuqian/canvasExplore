@@ -22,12 +22,6 @@ function newLine() {
     lineArray.push(newline);
     drawLine(lineArray)
 }
-function getRandom(from, to) {
-    return Math.floor(Math.random() * (to - from + 1) + from);
-}//获取随机坐标
-function remove(arg, index) {
-    arg.splice(index, 1);
-}
 function drawLine(arg) {
     g.clearRect(0, 0, 2000, 2000);
     for (i in arg) {
