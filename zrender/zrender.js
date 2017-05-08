@@ -130,11 +130,6 @@ function redrawArc(arg) {
         gg.arc(arg[i].x, arg[i].y, arg[i].r, 0, 2 * Math.PI);
         gg.fill();
     }
-    //gg.beginPath();
-    //gg.font = '10px Verdana';
-    //gg.fillStyle = 'black'
-    //gg.fillText('begin', canvas.width / 2 - 16, 4 * canvas.height / 5 + 4)
-
 
     gg.beginPath();
     gg.arc(canvas.width / 2 - 10, 4 * canvas.height / 5 - 2, 5, 1.25 * Math.PI, 1.75 * Math.PI);
