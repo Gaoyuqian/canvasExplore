@@ -12,9 +12,9 @@ var JDT = {
         //半成品
 
 
-        var canvas = document.getElementById('JDT-a');
+        var canvas = document.getElementById('right-a');
         var c = canvas.getContext('2d');
-        var canvasa = document.getElementById('JDT-b');
+        var canvasa = document.getElementById('right-b');
         var c1 = canvasa.getContext('2d');
         var end = 2*end;
         var i = 0;

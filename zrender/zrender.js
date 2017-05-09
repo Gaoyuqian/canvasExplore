@@ -170,7 +170,6 @@ function mouseMovingFirst(e) {
             }
         } else {
             drawArc(arcArray,1);
-
         }
     }
 }
@@ -256,7 +255,7 @@ function mouseClickSecond(e) {
             if (arc.name == 'in') {
                 g.clearRect(0, 0, 2000, 2000);
                 gg.clearRect(0, 0, 2000, 2000);
-                window.onmousemove = '';
+                window.onmousemove = mouseMovingThird;
                 window.onclick = '';
                 lineArray = [];
                 textArray = [];
@@ -291,7 +290,23 @@ function mousemovingSecond(e){
 //----------第三页开始------------
 //canvas都能干什么
 
+function mouseMovingThird(e) {
+    var clickX = e.pageX - canvas.offsetLeft;
+    var clickY = e.pageY - canvas.offsetTop;
 
+    for (i in arcArray) {
+        var arc = arcArray[i];
+        var distanceFromCenter = Math.sqrt(Math.pow(arc.x - clickX, 2) + Math.pow(arc.y - clickY, 2))
+        if (distanceFromCenter <= arc.r) {
+            if (arc.name == 'in') {
+                arc.color = 'orange';
+                redrawArc(arcArray);
+            }
+        } else {
+            drawArc(arcArray,2);
+        }
+    }
+}
 /*
 *   数据可视化
 *
@@ -324,8 +339,6 @@ window.onload = function () {
         newLine();
         newText();
     }, 30)
-
-
     window.onmousemove = mouseMovingFirst;
     window.onclick = mouseClickFirst;
 
