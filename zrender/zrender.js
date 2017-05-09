@@ -192,7 +192,7 @@ function mouseClickFirst(e) {
                 clearInterval(first);
 
 
-                second = setInterval(newTextSecond, 100);
+                second = setInterval(newTextSecond, 50);
 
             }
         }
@@ -209,7 +209,12 @@ function mouseClickFirst(e) {
 //  ---------第二页start----------
 //  canvas和svg的区别
 
-var secondText = '阿斯顿咖啡机阿莱克斯大家发牢骚的风景啊索朗多吉法律，圣诞节发生了看大家发牢骚肯德基法律考试江东父老卡技术的六块腹肌阿斯利康的风景离开';
+var secondText = 'canvas和svg都是HTML5推荐使用的图形技术，Canvas基于像素，提供2D绘制函数，是一种HTML元' +
+    '素类型，依赖于HTML，只能通过脚本绘制图形；SVG为矢量，提供一系列图' +
+    '形元素（Rect, Path, Circle, Line …),还有完整的动画，事件机制，本身就能独立使用，也可以嵌入到HTML中。' +
+    'Canvas提供的功能更原始，适合像素处理，动态渲染和大数据量绘制，' +
+    'SVG功能更完善，适合静态图片展示，高保真文档查看和打印的应用场景'
+
 var count1 = 0;
 var count2 = 0;
 var height = 50;
@@ -224,7 +229,6 @@ function newTextSecond() {
         height+=30;
         count2 = 0;
         x = 30;
-
     }
     drawTextSecond(textArray);
     if (count1 > secondText.length) {
