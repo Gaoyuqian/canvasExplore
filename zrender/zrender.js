@@ -207,7 +207,6 @@ function mouseClickFirst(e) {
 
 
 //  ---------第二页start----------
-//  canvas和svg的区别
 
 var secondText = 'canvas和svg都是HTML5推荐使用的图形技术，Canvas基于像素，提供2D绘制函数，是一种HTML元' +
     '素类型，依赖于HTML，只能通过脚本绘制图形；SVG为矢量，提供一系列图' +
@@ -262,6 +261,7 @@ function mouseClickSecond(e) {
                 lineArray = [];
                 textArray = [];
                 clearInterval(second);
+                cD.init(200, 200, 200,'zrender1');
             }
         }
     }
@@ -284,6 +284,38 @@ function mousemovingSecond(e){
         }
     }
 }
+
+//----------第二页结束------------
+
+
+//----------第三页开始------------
+//canvas都能干什么
+
+
+/*
+*   数据可视化
+*
+*
+*   动画效果
+*
+*
+*   html游戏
+*
+*
+*
+*/
+
+
+
+
+
+
+
+//----------第三页结束------------
+
+
+
+
 
 
 window.onload = function () {

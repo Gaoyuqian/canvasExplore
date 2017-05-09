@@ -5,9 +5,7 @@
  *
  *
  */
-window.onload = function () {
-    cD.init(400, 200, 200);
-}
+
 
 
 var cD = {
