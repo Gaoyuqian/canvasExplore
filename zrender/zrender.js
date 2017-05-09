@@ -95,6 +95,15 @@ function drawText(arg) {
         }
     }
 }
+function drawChineseText(arg) {
+    ggg.clearRect(0, 0, 2000, 2000);
+    for (i in arg) {
+        ggg.beginPath();
+        ggg.font = arg[i].size + "px Verdana";
+        ggg.fillStyle = arg[i].color;
+        ggg.fillText(arg[i].text, arg[i].x, arg[i].height);
+    }
+}
 //-----end-----   文字结束
 
 
@@ -165,9 +174,7 @@ var secondText = 'canvas和svg都是HTML5推荐使用的图形技术，Canvas基
     'Canvas提供的功能更原始，适合像素处理，动态渲染和大数据量绘制，' +
     'SVG功能更完善，适合静态图片展示，高保真文档查看和打印的应用场景';
 
-
 var thirdText = 'canvas通过对相应的dom添加事件绑定，在相应的条件下进行正确高效的canvas重绘，来实现canvas的动画效果';
-
 var count1 = 0;
 var count2 = 0;
 var height = 50;
@@ -183,23 +190,12 @@ function newTextSecond() {
         count2 = 0;
         x = 30;
     }
-    drawTextSecond(textArray);
+    drawChineseText(textArray);
     if (count1 > secondText.length) {
         drawArc(arcArray, 2)
-
         clearInterval(second);
     }
 }
-function drawTextSecond(arg) {
-    g.clearRect(0, 0, 2000, 2000);
-    for (i in arg) {
-        g.beginPath();
-        g.font = arg[i].size + "px Verdana";
-        g.fillStyle = arg[i].color;
-        g.fillText(arg[i].text, arg[i].x, arg[i].height);
-    }
-}
-
 //----------第二页结束------------
 
 
@@ -215,7 +211,7 @@ function newTextThird() {
         count2 = 0;
         x = 500;
     }
-    drawTextThird(textArray);
+    drawChineseText(textArray);
     if (count1 > thirdText.length) {
         drawArc(arcArray, 2)
         count2 = 0;
@@ -223,15 +219,7 @@ function newTextThird() {
         clearInterval(third);
     }
 }
-function drawTextThird(arg) {
-    ggg.clearRect(0, 0, 2000, 2000);
-    for (i in arg) {
-        ggg.beginPath();
-        ggg.font = arg[i].size + "px Verdana";
-        ggg.fillStyle = arg[i].color;
-        ggg.fillText(arg[i].text, arg[i].x, arg[i].height);
-    }
-}
+
 /*
  *   数据可视化
  *
@@ -247,6 +235,9 @@ function drawTextThird(arg) {
 //----------第三页结束------------
 
 
+
+
+//事件绑定
 var clickMoving = 0;
 function movingevent(e) {
     var clickX = e.pageX - canvas.offsetLeft;
@@ -302,6 +293,8 @@ function clickEvent(e) {
         }
     }
 }
+
+//事件绑定结束
 
 
 window.onload = function () {
