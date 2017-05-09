@@ -52,13 +52,12 @@ var cD = {
         canvas.onload = this.drawBPLine(oX, oY, that.r1, that.r2, that.r3);
         canvas.onload = this.drawBZ(oX, oY, that.sR, that.mR, that.hR);
         canvas.onload = this.drawCenter(oX, oY);
-        var draw = setInterval(function () {
+          draw = setInterval(function () {
             that.drawBP(oX, oY, r);
             that.drawBPLine(oX, oY, that.r1, that.r2, that.r3);
             that.drawBZ(oX, oY, that.sR, that.mR, that.hR);
             that.drawCenter(oX, oY);
         }, 1000);
-
     },
     getCanvas: function () {
         return document.getElementsByTagName('canvas')[0].getContext('2d');
@@ -140,4 +139,9 @@ var cD = {
         cts.fill();
         cts.stroke()
     },
+    destroy:function(){
+        clearInterval(draw);
+
+
+    }
 };
