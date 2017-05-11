@@ -53,7 +53,7 @@ function randomFromTo(from, to) {
 var defaultSelect ;//用于存放被选中的图形
 var moving = false;
 
-function clickEvent(e){
+function clickEvent(e){{}
     var clickX = e.pageX - canvas.offsetLeft;
     var clickY = e.pageY - canvas.offsetTop;
     for(var i = sxArray.length - 1;i>=0;i--){

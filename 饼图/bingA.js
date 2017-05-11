@@ -8,7 +8,7 @@
  */
 var bArray = [];
 var lArray = [];
-var colorArray = ['red', 'orange', 'blue', 'black', 'grey', 'green']
+var colorArray = ['red', 'orange', 'blue', 'black', 'green', 'pink', '#ff5700','yellow']
 var canvas = document.getElementById('bingA');
 var g = canvas.getContext('2d');
 var total = 0;
@@ -38,7 +38,7 @@ function getLine(x, y, deg, length, color) {
     this.color = color;
 }
 
-function drawBing(arg,move) {
+function drawBing(arg, move) {
     var temp = 0;//负责接收上一个
     g.clearRect(0, 0, canvas.width, canvas.height);
     if (typeof arg == 'object') {
@@ -46,6 +46,7 @@ function drawBing(arg,move) {
             total += i.value;
             bArray.push(new getBing(200, 200, 100, colorArray[colorArray.length - 1], i.value, i.name));
             colorArray.pop();
+
         }
     }
     for (let i in bArray) {
@@ -76,7 +77,7 @@ function drawBing(arg,move) {
             g.lineTo(line.Ex - 10, line.Ey);
             g.font = '20px';
             g.fillStyle = bArray[i].color;
-            g.fillText(bArray[i].name, line.Ex - 10 - (bArray[i].name.length+1) * 10, line.Ey+5);
+            g.fillText(bArray[i].name, line.Ex - 10 - (bArray[i].name.length + 1) * 10, line.Ey + 5);
 
         }
         g.strokeStyle = line.color;
@@ -84,9 +85,9 @@ function drawBing(arg,move) {
         //判断Ex和Ey 的象限来确定是横线的加减关系，
     }
 
-   if(move){
-       canvas.onmousedown = moveEvent;
-   }
+    if (move) {
+        canvas.onmousedown = moveEvent;
+    }
 }
 
 function moveEvent(e) {
@@ -138,5 +139,8 @@ window.onload = function () {
     drawBing([{'name': '蚂蚁金服', 'value': 3333}, {'name': '饿了么', 'value': 3333}, {
         'name': '百度贴吧',
         'value': 2222
-    }, {'name': '京东', 'value': 5555}, {'name': '淘宝', 'value': 2342}, {'name': '知乎', 'value': 3212}],true);
+    }, {'name': '京东', 'value': 5555}, {'name': '京东', 'value': 5555}, {'name': '京东', 'value': 5555}, {
+        'name': '淘宝',
+        'value': 2342
+    }, {'name': '知乎', 'value': 3212}], true);
 }

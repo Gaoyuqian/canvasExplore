@@ -223,18 +223,17 @@ function newTextThird() {
 /*
  *   数据可视化
  *
- *
  *   动画效果
- *
  *
  *   html游戏
  *
- *
  */
+//用zrender做动画效果 做一个球群  触摸散开
+
+
+
 
 //----------第三页结束------------
-
-
 
 
 //事件绑定
@@ -252,7 +251,7 @@ function movingevent(e) {
                 redrawArc(arcArray);
             }
         } else {
-            drawArc(arcArray, clickMoving+1);
+            drawArc(arcArray, clickMoving + 1);
         }
     }
 }
@@ -271,7 +270,7 @@ function clickEvent(e) {
                 textArray = [];
                 count2 = 0;
                 count1 = 0;
-                height=50;
+                height = 50;
                 clickMoving++;
                 switch (clickMoving) {
                     case 1:
