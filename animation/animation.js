@@ -2,9 +2,10 @@
  * Created by yuqiangao on 2017/5/10.
  */
 var animation = {
-
+//舍弃
     arcArray: [],
-    time:'',
+    time: '',
+    aa: true,
 
     init: function (id) {
         var zj = document.getElementById(id);
@@ -14,35 +15,37 @@ var animation = {
         zj.appendChild(canvas);
         this.createArc();
         this.drawArc();
-        var gg = setInterval(animation.main,1000);
+        //var gg = setInterval(animation.main,1000);
+        this.main(400, 400);
+
     },
-    animationArc:function(x, y, r, color){
+    animationArc: function (x, y, r, color) {
         this.x = x;
         this.oldY = y;
-        this.oldX= x;
+        this.oldX = x;
         this.y = y;
         this.r = r;
         this.color = color;
     },
     createArc: function () {
         var newArc = new this.animationArc(100, 100, 50, 'red');
-        var newArc1 = new this.animationArc(200 , 100, 50, 'red');
-        var newArc2 = new this.animationArc(300 , 100, 50, 'red');
+        //var newArc1 = new this.animationArc(200, 100, 50, 'green');
+        //var newArc2 = new this.animationArc(300, 100, 50, 'gold');
         this.arcArray.push(newArc);
-        this.arcArray.push(newArc1);
-        this.arcArray.push(newArc2);
+        //this.arcArray.push(newArc1);
+        //this.arcArray.push(newArc2);
 
     },
     drawArc: function () {
 
         var canvas = document.getElementsByTagName('canvas');
-        console.log(animation.arcArray,canvas[0].height,canvas[0].width);
+        console.log(animation.arcArray, canvas[0].height, canvas[0].width);
 
         var g = canvas[0].getContext('2d');
 
         g.clearRect(0, 0, 500, 500)
-        g.beginPath();
         for (var i in this.arcArray) {
+            g.beginPath();
             var arc = this.arcArray[i];
             g.arc(arc.x, arc.y, arc.r, 0, 2 * Math.PI);
             g.fillStyle = arc.color;
@@ -51,7 +54,7 @@ var animation = {
     },
 
 
-    redraw: function (x,y,r) {
+    redraw: function (x, y, r) {
         var canvas = document.getElementsByTagName('canvas');
         var g = canvas[0].getContext('2d');
         g.clearRect(0, 0, 500, 500);
@@ -60,7 +63,7 @@ var animation = {
         g.fillStyle = 'rgba(216,216,216,0.2)';
         g.fill();
     },
-    isPath:function(e){
+    isPath: function (e) {
         var clickX = e.pageX
         var clickY = e.pageY
 
@@ -68,12 +71,13 @@ var animation = {
             var arc = animation.arcArray[i];
             var distanceFromCenter = Math.sqrt(Math.pow(arc.x - clickX, 2) + Math.pow(arc.y - clickY, 2))
             if (distanceFromCenter <= arc.r) {
-                arc.x+=2;
-                for(var j in  animation.arcArray){
+                arc.x += 2;
+                for (var j in  animation.arcArray) {
                     var jrc = animation.arcArray[j];
-                    if(arc.x+arc.r*2>jrc.x){
-                        if(j!=i){
-                            jrc.x+=2
+                    console.log(i);
+                    if (arc.x + arc.r * 2 > jrc.x) {
+                        if (j != i) {
+                            jrc.x += 2
                         }
                         animation.drawArc();
                     }
@@ -82,47 +86,51 @@ var animation = {
         }
     },
 
-    animatinate:function(){
-        var canvas = document.getElementsByTagName('canvas');
-        var g = canvas[0].getContext('2d');
-        g.clearRect(0,0,1000,1000);
-        g.beginPath();
-        for (var i in this.arcArray) {
-            var arc = this.arcArray[i];
-            g.arc(arc.x, arc.y, arc.r, 0, 2 * Math.PI);
-            g.fillStyle = arc.color;
-            g.fill();
-        }
-    },
-    main:function(){
+    animatinate: function (toX, toY) {
         var canvas = document.getElementsByTagName('canvas');
         var g = canvas[0].getContext('2d');
         for (var i in animation.arcArray) {
             var arc = animation.arcArray[i];
-            console.log(arc.y + arc.r ,arc.y + arc.r >= canvas[0].height)
+            g.clearRect(0, 0, 500, 500);
 
-            if (arc.x + arc.r >= canvas[0].width) {
-                arc.y+=50;
-            }else if (arc.y + arc.r >= canvas[0].height) {
-                arc.x-=50;
-            }else if (arc.x - arc.r <= 0) {
-                arc.y-=50;
-            }else if (arc.y - arc.r <= 0) {
-                arc.x+=50;
-            }else{
-                arc. x+=50
+            console.log(arc.x <= toX && arc.y <= toY);
+            if (arc.x <= toX && arc.y <= toY) {
+                g.beginPath();
+                g.arc(arc.x, arc.y, arc.r, 0, 2 * Math.PI);
+                g.fillStyle = arc.color;
+                g.fill();
+            } else {
+                animation.aa = false;
             }
-            animation.drawArc();
         }
+    },
+    main: function (toX, toY) {
+        var canvas = document.getElementsByTagName('canvas');
+        var g = canvas[0].getContext('2d');
+        var toX = toX;
+        var toY = toY;
+        for (var i in animation.arcArray) {
+            var arc = animation.arcArray[i];
+            var angleToO = Math.atan((toX - arc.x) / (toY - arc.y)) * 180 / Math.PI;
+            arc.x +=Math.abs(Math.sin(angleToO).toFixed(1));
+            arc.y += Math.abs(Math.cos(angleToO).toFixed(1));
+            console.log(arc.x, arc.y)
 
+            animationTime = setTimeout(function () {
+                if (animation.aa) {
+                    animation.animatinate(toX, toY);
+                    return animation.main(400, 400)
+                }
 
+            }, 16)
+        }
         //利用坐标定位
         //  例如  要去500,500 计算出从500到起点的直线距离， 通过角度计算路线  ！！！！
     }
 }
 
 
-
 window.onload = function () {
     animation.init('main');
+    window.onclick = animation.isPath;
 }
