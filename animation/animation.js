@@ -6,7 +6,7 @@ var animation = {
     arcArray: [],
     time: '',
     aa: true,
-
+    animationArray:[],
     init: function (id) {
         var zj = document.getElementById(id);
         var canvas = document.createElement('canvas');
@@ -112,8 +112,8 @@ var animation = {
         for (var i in animation.arcArray) {
             var arc = animation.arcArray[i];
             var angleToO = Math.atan((toX - arc.x) / (toY - arc.y)) * 180 / Math.PI;
-            arc.x +=Math.abs(Math.sin(angleToO).toFixed(1));
-            arc.y += Math.abs(Math.cos(angleToO).toFixed(1));
+            arc.x +=2*Math.abs(Math.sin(angleToO));
+            arc.y +=2*Math.abs(Math.cos(angleToO));
             console.log(arc.x, arc.y)
 
             animationTime = setTimeout(function () {
@@ -121,11 +121,10 @@ var animation = {
                     animation.animatinate(toX, toY);
                     return animation.main(400, 400)
                 }
-
             }, 16)
         }
         //利用坐标定位
-        //  例如  要去500,500 计算出从500到起点的直线距离， 通过角度计算路线  ！！！！
+        //将所有的动画 集合到一个数组里循环运行
     }
 }
 
