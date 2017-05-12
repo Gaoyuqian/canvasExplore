@@ -13,7 +13,6 @@ define('create', function () {
             canvas.height = parseInt(zj.style.height);
             canvas.id = name + '-canvas';
             zj.appendChild(canvas);
-
         }
         return canvas;
     };
@@ -31,6 +30,7 @@ define('mouseEvent', ['arc', 'create'], function (arc, create) {
         }
     };
     var onClick = function (e) {
+        console.log(arguments)
         var clickX = e.pageX - canvas.offsetLeft;
         var clickY = e.pageY - canvas.offsetTop;
         var arcArray = arc.getArc(null, true);
@@ -38,9 +38,17 @@ define('mouseEvent', ['arc', 'create'], function (arc, create) {
         for (var i in arcArray) {
             var ac = arcArray[i];
             isCover = isPath(clickX, clickY, ac);
-            ac.isSelected = isCover;
-            console.log(ac);
-
+            if (ac.single) {
+                if (isCover) {
+                    ac.isSelected = true;
+                } else {
+                    ac.isSelected = false;
+                }
+            } else {
+                if (isCover) {
+                    ac.isSelected = !ac.isSelected;
+                }
+            }
             arc.drawArc('main');
         }
     }
@@ -48,7 +56,7 @@ define('mouseEvent', ['arc', 'create'], function (arc, create) {
 })
 
 
-define('arc', ['create'], function (create) {
+define('arc', ['create'], function (create, mouseEvent) {
     var arcArray = [];
     var arc = function arc(option) {
         this.x = option.x;
@@ -57,6 +65,7 @@ define('arc', ['create'], function (create) {
         this.color = option.color;
         this.newColor = '';
         this.isSelected = false;
+        this.single = option.single;
         this.canSelected = option.canSelected;
     };
 
@@ -88,19 +97,27 @@ define('arc', ['create'], function (create) {
         }
         return this
     };
+
     return {drawArc: drawArc, getArc: getArc}
 });
 
+define('eventBind', function () {
+    var eventBind = function (e, f) {
+        document.addEventListener(e, f, false);
+    }
+    return {eventBind: eventBind}
+})
 
-require(['arc', 'mouseEvent'], function (arc, mouseEvent) {
+
+require(['arc', 'eventBind', 'mouseEvent'], function (arc, eventBind, mouseEvent) {
 
     arc.drawArc('main', [{x: 444, y: 344, r: 100, color: 'green', canSelected: true}, {
         x: 235,
         y: 443,
         r: 100,
         color: 'black',
-        canSelected: true
+        canSelected: true,
     }, {x: 100, y: 100, r: 50, color: 'green', canSelected: true}]);
-    window.onclick = mouseEvent.onClick;
+    eventBind.eventBind('click', mouseEvent.onClick, false)
 
 })
