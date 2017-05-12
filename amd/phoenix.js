@@ -120,4 +120,11 @@ require(['arc', 'eventBind', 'mouseEvent'], function (arc, eventBind, mouseEvent
     }, {x: 100, y: 100, r: 50, color: 'green', canSelected: true}]);
     eventBind.eventBind('click', mouseEvent.onClick, false)
 
+
+    
+    //待解决问题
+    //  1.解决多选和单选问题
+    //  2.所有图形都存在一个数组里
+    //  3. destroy函数
+    //  4. 其他鼠标事件
 })
