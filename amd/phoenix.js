@@ -121,7 +121,7 @@ require(['arc', 'eventBind', 'mouseEvent'], function (arc, eventBind, mouseEvent
     eventBind.eventBind('click', mouseEvent.onClick, false)
 
 
-    
+
     //待解决问题
     //  1.解决多选和单选问题
     //  2.所有图形都存在一个数组里
