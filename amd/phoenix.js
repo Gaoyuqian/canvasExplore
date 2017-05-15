@@ -18,55 +18,17 @@ define('create', function () {
     };
     return {init: init};
 });
-
-define('mouseEvent', ['arc', 'create'], function (arc, create) {
-    var canvas = create.init('main')
-    var isPath = function (x, y, path) {
-        var distanceFromCenter = Math.sqrt(Math.pow(path.x - x, 2) + Math.pow(path.y - y, 2))
-        if (distanceFromCenter <= path.r) {//判断点击位置是否在某个圆内
-            return true;
-        } else {
-            return false;
-        }
-    };
-    var onClick = function (e) {
-        console.log(arguments)
-        var clickX = e.pageX - canvas.offsetLeft;
-        var clickY = e.pageY - canvas.offsetTop;
-        var arcArray = arc.getArc(null, true);
-        var isCover;
-        for (var i in arcArray) {
-            var ac = arcArray[i];
-            isCover = isPath(clickX, clickY, ac);
-            if (ac.single) {
-                if (isCover) {
-                    ac.isSelected = true;
-                } else {
-                    ac.isSelected = false;
-                }
-            } else {
-                if (isCover) {
-                    ac.isSelected = !ac.isSelected;
-                }
-            }
-            arc.drawArc('main');
-        }
-    }
-    return {onClick: onClick, isPath: isPath}
-})
-
-
-define('arc', ['create'], function (create, mouseEvent) {
+define('arc', ['create'], function (create) {
     var arcArray = [];
     var arc = function arc(option) {
-        this.x = option.x;
-        this.y = option.y;
-        this.r = option.r;
-        this.color = option.color;
-        this.newColor = '';
-        this.isSelected = false;
-        this.single = option.single;
-        this.canSelected = option.canSelected;
+        this.x = option.x;  //x
+        this.y = option.y;  //y
+        this.r = option.r;  //r
+        this.color = option.color;  //颜色
+        this.newColor = '';  //重绘颜色
+        this.isSelected = false;  //被选中状态
+        this.single = option.single;  //是否单选
+        this.canSelected = option.canSelected;  //是否可以被选中
     };
 
     var getArc = function (arr, isGet) {
@@ -94,22 +56,60 @@ define('arc', ['create'], function (create, mouseEvent) {
             g.fillStyle = ac.newColor || ac.color;
             g.arc(ac.x, ac.y, ac.r, 0, 2 * Math.PI);
             g.fill();
+            if (ac.canSelected && !window.onclick) {
+                //绑定事件(目前只绑定点击事件，之后会根据path的定义绑定更多事件)
+                document.addEventListener('click', onClick, false);
+            }
         }
         return this
     };
+    var destroy = function () {
+        arcArray = [];
+    };
+    var isPath = function (x, y, path) {
+        var distanceFromCenter = Math.sqrt(Math.pow(path.x - x, 2) + Math.pow(path.y - y, 2))
+        if (distanceFromCenter <= path.r && path.canSelected) {//判断点击位置是否在某个圆内
+            return true;
+        } else {
+            return false;
+        }
+    };
+    var onClick = function (e) {
+        var canvas = create.init('main');
 
-    return {drawArc: drawArc, getArc: getArc}
+        var clickX = e.pageX - canvas.offsetLeft;
+        var clickY = e.pageY - canvas.offsetTop;
+        var arcArray = getArc(null, true);
+        var isCover;
+        for (var i in arcArray) {
+            var ac = arcArray[i];
+            isCover = isPath(clickX, clickY, ac);
+            if (ac.single) {
+                if (isCover) {
+                    for (var j = 0; j < arcArray.length; j++) {
+                        if (i != j) {
+                            arcArray[j].isSelected = false;
+                        }
+                    }
+                    ac.isSelected = !ac.isSelected;
+
+                } else {
+                    ac.isSelected = false;
+                }
+            } else {
+                if (isCover) {
+                    ac.isSelected = !ac.isSelected;
+                }
+            }
+            drawArc('main');
+        }
+    }
+
+    return {drawArc: drawArc, getArc: getArc, destroy: destroy}
 });
 
-define('eventBind', function () {
-    var eventBind = function (e, f) {
-        document.addEventListener(e, f, false);
-    }
-    return {eventBind: eventBind}
-})
 
-
-require(['arc', 'eventBind', 'mouseEvent'], function (arc, eventBind, mouseEvent) {
+require(['arc'], function (arc) {
 
     arc.drawArc('main', [{x: 444, y: 344, r: 100, color: 'green', canSelected: true}, {
         x: 235,
@@ -117,14 +117,14 @@ require(['arc', 'eventBind', 'mouseEvent'], function (arc, eventBind, mouseEvent
         r: 100,
         color: 'black',
         canSelected: true,
+        single: true,
     }, {x: 100, y: 100, r: 50, color: 'green', canSelected: true}]);
-    eventBind.eventBind('click', mouseEvent.onClick, false)
-
 
 
     //待解决问题
-    //  1.解决多选和单选问题
+    //  1.解决多选和单选问题   (已解决)
     //  2.所有图形都存在一个数组里
-    //  3. destroy函数
-    //  4. 其他鼠标事件
+    //  2补充.   同一个种类的图形存放在一个数组里方便分类
+    //  4. 其他鼠标事件  给canvas绑定事件可以控制当前canvas上的所有path
+
 })
