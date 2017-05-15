@@ -37,9 +37,7 @@ define('arc', ['base', 'create', 'event'], function (base, create, event) {
             for (var i in arr) {
                 var newArc = new arc(arr[i]);
                 arcArray.push(newArc);
-                if (newArc.canSelected) {
                     base.add(newArc);
-                }
             }
         }
         return arcArray;
@@ -69,36 +67,6 @@ define('arc', ['base', 'create', 'event'], function (base, create, event) {
     var destroy = function () {
         arcArray = [];
     };
-    var onClick1 = function (e) {
-        //不同path的不同事件如何叠加混合
-        //var canvas = create.init('main');
-        var clickX = e.pageX - canvas.offsetLeft;
-        var clickY = e.pageY - canvas.offsetTop;
-        var arcArray = getArc(null, true);
-        var isCover;
-        for (var i in arcArray) {
-            var ac = arcArray[i];
-            isCover = isPath(clickX, clickY, ac);
-            if (ac.single) {
-                if (isCover) {
-                    for (var j = 0; j < arcArray.length; j++) {
-                        if (i != j) {
-                            arcArray[j].isSelected = false;
-                        }
-                    }
-                    ac.isSelected = !ac.isSelected;
-
-                } else {
-                    ac.isSelected = false;
-                }
-            } else {
-                if (isCover) {
-                    ac.isSelected = !ac.isSelected;
-                }
-            }
-            drawArc('main');
-        }
-    }
 
     return {drawArc: drawArc, getArc: getArc, destroy: destroy}
 });
@@ -121,9 +89,7 @@ define('rect', ['create', 'base'], function (create, base) {
             for (var i in arr) {
                 var newRect = new rect(arr[i]);
                 rectArray.push(newRect);
-                if (newRect.canSelected) {
                     base.add(newRect);
-                }
             }
         }
         return rectArray;
@@ -140,7 +106,7 @@ define('rect', ['create', 'base'], function (create, base) {
             g.beginPath();
             g.rect(rt.x, rt.y, rt.width, rt.height);
             g.lineWidth = rt.lineWidth || 1;
-            g.fillStyle = rt.color || 'black';
+            g.fillStyle = rt.color ||  'black';
             g.fill();
             g.closePath();
 
@@ -170,13 +136,40 @@ define('base', function () {
 
 });
 
-define('event', ['base', 'redraw'], function (base, redraw) {
+define('event', ['base'], function (base) {
 
     var redrwaA = base.getEventArray();
-    var isPath = function (x, y, path) {
-        var distanceFromCenter = Math.sqrt(Math.pow(path.x - x, 2) + Math.pow(path.y - y, 2))
-        console.log(g.isPointInPath(x, y), x, y, path);
-    };
+    var isPath = function(ac,clickX,clickY,i){
+        if (ac.single) {
+            if (g.isPointInPath(clickX, clickY)) {
+                if(!ac.canSelected){
+                    return;
+                }
+                for (var j = 0; j < redrwaA.length; j++) {
+                    if (i != j) {
+                        redrwaA[j].isSelected = false;
+                    }
+                }
+                ac.isSelected = !ac.isSelected;
+
+            } else {
+                ac.isSelected = false;
+            }
+        } else {
+            if (g.isPointInPath(clickX, clickY)) {
+                if(!ac.canSelected){
+                    return;
+                }
+                ac.isSelected = !ac.isSelected;
+            }
+        }
+
+        if (ac.isSelected) {
+            ac.newColor = 'gold';
+        } else if (!ac.isSelected) {
+            ac.newColor = '';
+        }
+    }
     var onClick = function (e) {
         //点击事件兼顾重绘功能
         //不同path的不同事件如何叠加混合
@@ -189,85 +182,25 @@ define('event', ['base', 'redraw'], function (base, redraw) {
             switch (ac.name) {
                 case 'arc':
                     g.arc(ac.x, ac.y, ac.r, 0, 2 * Math.PI);
+                    isPath(ac,clickX,clickY,i)
                     break;
                 case 'rect':
                     g.rect(ac.x, ac.y, ac.width, ac.height);
                     g.lineWidth = ac.lineWidth || 1;
+                    isPath(ac,clickX,clickY,i)
+
                     break;
             }
-            // do somthing
-            if (ac.single) {
-                if (g.isPointInPath(clickX, clickY)) {
-                    for (var j = 0; j < redrwaA.length; j++) {
-                        if (i != j) {
-                            redrwaA[j].isSelected = false;
-                        }
-                    }
-                    ac.isSelected = !ac.isSelected;
-
-                } else {
-                    ac.isSelected = false;
-                }
-            } else {
-                if (g.isPointInPath(clickX, clickY)) {
-                    ac.isSelected = !ac.isSelected;
-                }
-            }
-            console.log(ac);
-
-            if (ac.isSelected) {
-                ac.newColor = 'gold';
-            } else if (!ac.isSelected) {
-                ac.newColor = 'red';
-            }
-
+            //可控制是stroke还是fill
             g.fillStyle = ac.newColor || ac.color;
             g.fill();
         }
     }
-    return {isPath: isPath, onClick: onClick}
+    return {onClick: onClick}
 
 })
 
 
-define('redraw', ['event', 'base'], function (event, base) {
-    //负责对图形的重绘
-    //need 数组 坐标
-    var redrwaA = base.getEventArray();
-    var redraw = function (x, y) {
-        for (var i = redrwaA.length - 1; i > 0; i--) {
-            //g.clearRect(0, 0, canvas.width, canvas.height);
-            g.beginPath();
-            var ac = redrwaA[i];
-            isCover = g.isPointInPath(x, y)
-            console.log(isCover, ac);
-            if (g.isPointInPath(x, y)) {
-                g.fillStyle = 'yellow'
-            } else {
-                g.fillStyle = 'red'
-            }
-            g.fill();
-            //if (ac.single) {
-            //    if (isCover) {
-            //        for (var j = 0; j < redrwaA.length; j++) {
-            //            if (i != j) {
-            //                redrwaA[j].isSelected = false;
-            //            }
-            //        }
-            //        ac.isSelected = !ac.isSelected;
-            //
-            //    } else {
-            //        ac.isSelected = false;
-            //    }
-            //} else {
-            //    if (isCover) {
-            //        ac.isSelected = !ac.isSelected;
-            //    }
-            //}
-        }
-    }
-    return {redraw: redraw}
-})
 
 
 require(['create', 'arc', 'rect'], function (create, arc, rect) {
@@ -286,7 +219,6 @@ require(['create', 'arc', 'rect'], function (create, arc, rect) {
         y: 500,
         r: 50,
         color: 'green',
-        canSelected: true
     }]);
     rect.drawRect('main', [{
         x: 444, y: 344, width: 100, height: 100, color: 'green', canSelected: true
@@ -296,7 +228,7 @@ require(['create', 'arc', 'rect'], function (create, arc, rect) {
         width: 100,
         height: 100,
         color: 'green',
-        canSelected: true
+        lineWidth:8
     }])
 
 
