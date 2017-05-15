@@ -26,7 +26,6 @@ define('arc', ['base', 'create', 'event'], function (base, create, event) {
         this.y = option.y;  //y
         this.r = option.r;  //r
         this.name = 'arc';
-
         this.color = option.color;  //颜色
         this.newColor = '';  //重绘颜色
         this.isSelected = false;  //被选中状态
@@ -46,9 +45,6 @@ define('arc', ['base', 'create', 'event'], function (base, create, event) {
         return arcArray;
     };
     var drawArc = function (name, option) {
-        //var canvas = create.init(name)
-        //var g = canvas.getContext('2d');
-        //g.clearRect(0, 0, canvas.width, canvas.height);
         if (option) {
             getArc(option)
         }
@@ -72,20 +68,6 @@ define('arc', ['base', 'create', 'event'], function (base, create, event) {
     };
     var destroy = function () {
         arcArray = [];
-    };
-
-
-    var isPath = function (x, y, path) {
-        var distanceFromCenter = Math.sqrt(Math.pow(path.x - x, 2) + Math.pow(path.y - y, 2))
-        //if (distanceFromCenter <= path.r && path.canSelected) {//判断点击位置是否在某个圆内
-        //    return true;
-        //} else {
-        //    return false;
-        //}
-        console.log(g.isPointInPath(x, y), x, y, path);
-        //if(g.isPointInPath(x,y)){
-        //
-        //}
     };
     var onClick1 = function (e) {
         //不同path的不同事件如何叠加混合
@@ -149,8 +131,6 @@ define('rect', ['create', 'base'], function (create, base) {
 
 
     var drawRect = function (name, option) {
-        //var canvas = create.init(name)
-        //var g = canvas.getContext('2d');
 
         if (option) {
             getRect(option)
@@ -300,8 +280,14 @@ require(['create', 'arc', 'rect'], function (create, arc, rect) {
         r: 100,
         color: 'black',
         canSelected: true,
-        single: true,
-    }, {x: 100, y: 100, r: 50, color: 'green', canSelected: true},{x: 500, y: 500, r: 50, color: 'green', canSelected: true}]);
+        single: true
+    }, {x: 100, y: 100, r: 50, color: 'green', canSelected: true}, {
+        x: 500,
+        y: 500,
+        r: 50,
+        color: 'green',
+        canSelected: true
+    }]);
     rect.drawRect('main', [{
         x: 444, y: 344, width: 100, height: 100, color: 'green', canSelected: true
     }, {
@@ -316,7 +302,6 @@ require(['create', 'arc', 'rect'], function (create, arc, rect) {
 
     //待解决问题
     //  1.解决多选和单选问题   (已解决)
-    //  2.所有图形都存在一个数组里
-    //  2补充.   同一个种类的图形存放在一个数组里方便分类
+    //  2.所有图形都存在一个数组里 （可操作的图形存在一个数组里）
     //  4. 其他鼠标事件  给canvas绑定事件可以控制当前canvas上的所有path
 })
