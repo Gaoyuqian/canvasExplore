@@ -86,7 +86,7 @@ function drawText(arg) {
         g.beginPath();
         g.font = arg[i].size + "px Verdana";
         g.strokeStyle = arg[i].color;
-        g.strokeText(arg[i].text, (canvas.width - g.measureText(arg[i].text).width) / 2, canvas.height / 2);
+        g.strokeText(arg[i].text, (canvas.width - g.measureText(arg[i].text).width) / 2, canvas.height / 3);
         arg[i].size++;
         if (arg[i].size >= 300) {
             remove(arg, i);
@@ -110,10 +110,10 @@ function drawChineseText(arg) {
 //begin按钮开始
 
 function newArc() {
-    var arc = new createArc(canvas.width / 2, 4 * canvas.height / 5, 20, color[getRandom(0, 3)], 'out');
+    var arc = new createArc(canvas.width / 2, 4 * canvas.height / 5, 60, color[getRandom(0, 3)], 'out');
     arcArray.push(arc);
 
-    var arc = new createArc(canvas.width / 2, 4 * canvas.height / 5, 25, color[getRandom(0, 3)], 'in');
+    var arc = new createArc(canvas.width / 2, 4 * canvas.height / 5, 40, color[getRandom(0, 3)], 'in');
     arcArray.push(arc);
     drawArc(arcArray, 1);
 }
@@ -128,12 +128,13 @@ function drawArc(arg, key) {
         gg.stroke();
     }
     gg.beginPath();
-    gg.font = '10px Verdana';
-    gg.fillStyle = 'gold'
+    gg.font = '20px Verdana';
+    //gg.fillStyle = color[getRandom(0, color.length-1)]
+    gg.fillStyle = '#ff5700'
     if (key == 1) {
-        gg.fillText('begin', canvas.width / 2 - 16, 4 * canvas.height / 5 + 4)
+        gg.fillText('begin', canvas.width / 2 - 27, 4 * canvas.height / 5 + 6)
     } else {
-        gg.fillText('next', canvas.width / 2 - 13, 4 * canvas.height / 5 + 4)
+        gg.fillText('next', canvas.width / 2 - 22, 4 * canvas.height / 5 + 6)
     }
 }
 
@@ -147,18 +148,18 @@ function redrawArc(arg) {
         gg.fill();
     }
 
-    gg.beginPath();
-    gg.arc(canvas.width / 2 - 10, 4 * canvas.height / 5 - 2, 5, 1.25 * Math.PI, 1.75 * Math.PI);
-    gg.strokeStyle = 'black'
-    gg.stroke();
-    gg.beginPath();
-    gg.arc(canvas.width / 2 + 10, 4 * canvas.height / 5 - 2, 5, 1.25 * Math.PI, 1.75 * Math.PI);
-    gg.strokeStyle = 'black'
-    gg.stroke();
-    gg.beginPath();
-    gg.arc(canvas.width / 2, 4 * canvas.height / 5 + 4, 10, 0.25 * Math.PI, 0.75 * Math.PI);
-    gg.strokeStyle = 'black'
-    gg.stroke();
+    //gg.beginPath();
+    //gg.arc(canvas.width / 2 - 20, 4 * canvas.height / 5 - 10, 10, 1.25 * Math.PI, 1.75 * Math.PI);
+    //gg.strokeStyle = 'black'
+    //gg.stroke();
+    //gg.beginPath();
+    //gg.arc(canvas.width / 2 + 20, 4 * canvas.height / 5 - 10, 10, 1.25 * Math.PI, 1.75 * Math.PI);
+    //gg.strokeStyle = 'black'
+    //gg.stroke();
+    //gg.beginPath();
+    //gg.arc(canvas.width / 2, 4 * canvas.height / 5 + 10, 20, 0.25 * Math.PI, 0.75 * Math.PI);
+    //gg.strokeStyle = 'black'
+    //gg.stroke();
 }
 
 //begin按钮结束
@@ -238,6 +239,7 @@ function newTextThird() {
 
 //事件绑定
 var clickMoving = 0;
+var hasIn = false;
 function movingevent(e) {
     var clickX = e.pageX - canvas.offsetLeft;
     var clickY = e.pageY - canvas.offsetTop;
@@ -247,10 +249,17 @@ function movingevent(e) {
         var distanceFromCenter = Math.sqrt(Math.pow(arc.x - clickX, 2) + Math.pow(arc.y - clickY, 2))
         if (distanceFromCenter <= arc.r) {
             if (arc.name == 'in') {
-                arc.color = 'orange';
+                console.log(hasIn)
+                if(!hasIn){
+                    console.log('1')
+                    arc.color = color[getRandom(0, 3)];
+                }
+                hasIn = true;
+
                 redrawArc(arcArray);
             }
         } else {
+            hasIn = false;
             drawArc(arcArray, clickMoving + 1);
         }
     }
