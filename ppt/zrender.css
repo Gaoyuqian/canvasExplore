@@ -19,6 +19,11 @@
     right: 198px;
 }
 
+#zrender3{
+    position: absolute;
+    top: 100px;
+    right:0;
+}
 *{
     padding:0;
     margin:0;

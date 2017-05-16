@@ -11,6 +11,8 @@ var canvas1 = document.getElementById('zrender1');
 var gg = canvas1.getContext('2d');
 var canvas2 = document.getElementById('zrender2');
 var ggg = canvas2.getContext('2d');
+var canvas3 = document.getElementById('zrender3');
+var gggg = canvas3.getContext('2d');
 //zrender动画开始
 var lineArray = [];
 var textArray = [];
@@ -95,17 +97,32 @@ function drawText(arg) {
         }
     }
 }
-function drawChineseText(arg) {
-    ggg.clearRect(0, 0, 2000, 2000);
+function drawChineseText(arg,g) {
+    g.clearRect(0, 0, 2000, 2000);
+    console.log(arg);
     for (i in arg) {
-        ggg.beginPath();
-        ggg.font = arg[i].size + "px Verdana";
-        ggg.fillStyle = arg[i].color;
-        ggg.fillText(arg[i].text, arg[i].x, arg[i].height);
+        g.beginPath();
+        g.font = arg[i].size + "px Verdana";
+        g.fillStyle = arg[i].color;
+        g.fillText(arg[i].text, arg[i].x, arg[i].height);
     }
 }
 //-----end-----   文字结束
 
+
+//----图像开始------
+
+function drawImg(){
+    g.clearRect(0, 0, 2000, 2000);
+
+    var img=new Image()
+    img.src="canvas.jpg"
+    g.drawImage(img,canvas.width / 2 -320,400);
+}
+
+
+
+//----图像结束------
 
 //begin按钮开始
 
@@ -173,9 +190,13 @@ var secondText = 'canvas和svg都是HTML5推荐使用的图形技术，Canvas基
     '素类型，依赖于HTML，只能通过脚本绘制图形；SVG为矢量，提供一系列图' +
     '形元素（Rect, Path, Circle, Line …),还有完整的动画，事件机制，本身就能独立使用，也可以嵌入到HTML中。' +
     'Canvas提供的功能更原始，适合像素处理，动态渲染和大数据量绘制，' +
-    'SVG功能更完善，适合静态图片展示，高保真文档查看和打印的应用场景';
+    'SVG功能更完善，适合静态图片展示，高保真文档查看和打印的应用场景。';
 
 var thirdText = 'canvas通过对相应的dom添加事件绑定，在相应的条件下进行正确高效的canvas重绘，来实现canvas的动画效果';
+
+var canvasSvg = 'canvas和svg的对比';
+
+
 var count1 = 0;
 var count2 = 0;
 var height = 50;
@@ -191,12 +212,14 @@ function newTextSecond() {
         count2 = 0;
         x = 30;
     }
-    drawChineseText(textArray);
+    drawChineseText(textArray,gggg);
+    drawImg();
     if (count1 > secondText.length) {
         drawArc(arcArray, 2)
         clearInterval(second);
     }
 }
+
 //----------第二页结束------------
 
 
@@ -212,7 +235,7 @@ function newTextThird() {
         count2 = 0;
         x = 500;
     }
-    drawChineseText(textArray);
+    drawChineseText(textArray,ggg);
     if (count1 > thirdText.length) {
         drawArc(arcArray, 2)
         count2 = 0;
@@ -229,7 +252,7 @@ function newTextThird() {
  *   html游戏
  *
  */
-//用zrender做动画效果 做一个球群  触摸散开
+
 
 
 
@@ -275,6 +298,7 @@ function clickEvent(e) {
                 g.clearRect(0, 0, 2000, 2000);
                 gg.clearRect(0, 0, 2000, 2000);
                 ggg.clearRect(0, 0, 2000, 2000);
+                gggg.clearRect(0, 0, 2000, 2000);
                 lineArray = [];
                 textArray = [];
                 count2 = 0;
@@ -284,7 +308,15 @@ function clickEvent(e) {
                 switch (clickMoving) {
                     case 1:
                         clearInterval(first);
-                        second = setInterval(newTextSecond, 50);
+
+                        second = setInterval(function(){
+
+                            newTextSecond();
+                            g.beginPath();
+                            g.font = "30px Verdana";
+                            g.fillStyle = 'black';
+                            g.fillText(canvasSvg, 830,50);
+                        }, 50);
                         break;
                     case 2:
                         clearInterval(second);
