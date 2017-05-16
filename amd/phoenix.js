@@ -15,23 +15,12 @@ define(function (require) {
     var initRect = require('./drawPath/rect');
     var main = require('./main/main');
     var myPh = new main();
-
-
-
-    var arc = new initArc({
-        x: 235,
-        y: 443,
-        r: 100,
-        color: 'green',
-        canSelected: true,
-        single: true
-    });
-    var rect = new initRect({
+    myPh.addSharp(new initRect({
         x: 444, y: 344, width: 100, height: 100, color: 'gold', canSelected: true
-    });
-
-    myPh.addSharp(rect);
-    myPh.addSharp(arc);
+    }));
+    myPh.addSharp(new initArc({
+        x: 235, y: 443, r: 100, color: 'green', canSelected: true, single: true
+    }));
     myPh.draw();
 })
 

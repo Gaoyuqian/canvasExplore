@@ -37,6 +37,13 @@ define(function (require) {
         }
     }
     var onClick = function (e) {
+
+
+        //引入main的redraw  =>main的redraw指向各模块的redraw
+        //只判断是否在path上
+        //点击事件 mouseup mousedown 可以提供外部方法接口
+        //moving事件只修改x，y坐标值进行重绘
+
         //点击事件兼顾重绘功能
         //不同path的不同事件如何叠加混合
         var clickX = e.pageX - canvas.offsetLeft;

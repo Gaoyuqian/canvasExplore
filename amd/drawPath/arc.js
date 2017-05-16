@@ -1,5 +1,5 @@
 define(function (require) {
-    var arcArray = [];
+    var arcArray = [];//有留着的必要  辅助event代码的编写
     var base = require('./../base/base')
     var event = require('./../event/eventHandle')
     var ph = require('./../init/init');
@@ -15,6 +15,8 @@ define(function (require) {
         this.isSelected = false;  //被选中状态
         this.single = option.single;  //是否单选
         this.canSelected = option.canSelected;  //是否可以被选中
+        this.beginAngle = 0;
+        this.endAngle = 2;
     };
 
 
@@ -29,7 +31,7 @@ define(function (require) {
             g.beginPath();
             this.isSelected ? this.newColor = 'red' : this.newColor = '';
             g.fillStyle = this.newColor || this.color;
-            g.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+            g.arc(this.x, this.y, this.r,this.beginAngle, this.endAngle * Math.PI);
             g.fill();
             //if (this.canSelected && !window.onclick) {
             //    //绑定事件(目前只绑定点击事件，之后会根据path的定义绑定更多事件)
@@ -37,6 +39,9 @@ define(function (require) {
             //    document.addEventListener('click', event.onClick, false);
             //}
             return this
+        },
+        redraw: function (x, y) {
+            g.arc(this.x, this.y, this.r, this.beginAngle, this.endAngle * Math.PI);
         }
     }
     return arc
