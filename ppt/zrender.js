@@ -13,6 +13,8 @@ var canvas2 = document.getElementById('zrender2');
 var ggg = canvas2.getContext('2d');
 var canvas3 = document.getElementById('zrender3');
 var gggg = canvas3.getContext('2d');
+var canvas4 = document.getElementById('arc');
+var ggggg = canvas4.getContext('2d');
 //zrender动画开始
 var lineArray = [];
 var textArray = [];
@@ -48,7 +50,7 @@ function createArc(x, y, r, color, name) {
 
 
 function newLine() {
-    var newline = new Line(getRandom(0, canvas.height), getRandom(50, 200), color[getRandom(0, 3)], getRandom(5, 50));
+    var newline = new Line(getRandom(0, canvas.height), getRandom(50, 200), color[getRandom(0, 3)], getRandom(5, 20));
     lineArray.push(newline);
     drawLine(lineArray)
 }
@@ -97,9 +99,8 @@ function drawText(arg) {
         }
     }
 }
-function drawChineseText(arg,g) {
+function drawChineseText(arg, g) {
     g.clearRect(0, 0, 2000, 2000);
-    console.log(arg);
     for (i in arg) {
         g.beginPath();
         g.font = arg[i].size + "px Verdana";
@@ -112,14 +113,13 @@ function drawChineseText(arg,g) {
 
 //----图像开始------
 
-function drawImg(){
+function drawImg() {
     g.clearRect(0, 0, 2000, 2000);
 
-    var img=new Image()
-    img.src="canvas.jpg"
-    g.drawImage(img,canvas.width / 2 -320,400);
+    var img = new Image()
+    img.src = "canvas.jpg"
+    g.drawImage(img, canvas.width / 2 - 320, 400);
 }
-
 
 
 //----图像结束------
@@ -192,9 +192,12 @@ var secondText = 'canvas和svg都是HTML5推荐使用的图形技术，Canvas基
     'Canvas提供的功能更原始，适合像素处理，动态渲染和大数据量绘制，' +
     'SVG功能更完善，适合静态图片展示，高保真文档查看和打印的应用场景。';
 
-var thirdText = 'canvas通过对相应的dom添加事件绑定，在相应的条件下进行正确高效的canvas重绘，来实现canvas的动画效果';
+var thirdText = 'canvas通过对相应的dom添加事件绑定，在相应的条件下进行正确高效的canvas重绘，来实现canvas的动画效果。';
 
-var canvasSvg = 'canvas和svg的对比';
+var canvasSvgSecond = 'canvas和svg的对比';
+
+
+var canvasSvgThird = 'canvas动画';
 
 
 var count1 = 0;
@@ -212,7 +215,7 @@ function newTextSecond() {
         count2 = 0;
         x = 30;
     }
-    drawChineseText(textArray,gggg);
+    drawChineseText(textArray, gggg);
     drawImg();
     if (count1 > secondText.length) {
         drawArc(arcArray, 2)
@@ -235,7 +238,7 @@ function newTextThird() {
         count2 = 0;
         x = 500;
     }
-    drawChineseText(textArray,ggg);
+    drawChineseText(textArray, gggg);
     if (count1 > thirdText.length) {
         drawArc(arcArray, 2)
         count2 = 0;
@@ -273,7 +276,7 @@ function movingevent(e) {
         if (distanceFromCenter <= arc.r) {
             if (arc.name == 'in') {
                 console.log(hasIn)
-                if(!hasIn){
+                if (!hasIn) {
                     console.log('1')
                     arc.color = color[getRandom(0, 3)];
                 }
@@ -299,6 +302,7 @@ function clickEvent(e) {
                 gg.clearRect(0, 0, 2000, 2000);
                 ggg.clearRect(0, 0, 2000, 2000);
                 gggg.clearRect(0, 0, 2000, 2000);
+                ggggg.clearRect(0, 0, 2000, 2000);
                 lineArray = [];
                 textArray = [];
                 count2 = 0;
@@ -309,24 +313,36 @@ function clickEvent(e) {
                     case 1:
                         clearInterval(first);
 
-                        second = setInterval(function(){
-
+                        second = setInterval(function () {
                             newTextSecond();
                             g.beginPath();
                             g.font = "30px Verdana";
                             g.fillStyle = 'black';
-                            g.fillText(canvasSvg, 830,50);
+                            g.fillText(canvasSvgSecond, 830, 50);
                         }, 50);
                         break;
                     case 2:
                         clearInterval(second);
                         cD.init(200, 200, 200, 'zrender1');
                         x = 500;
-                        third = setInterval(newTextThird, 50);
+                        console.log(arcForZR)
+                        //arcthird = setInterval(, 200);
+                        arcForZR.begin();
+
+                        third = setInterval(function () {
+                                newTextThird()
+                                g.beginPath();
+                                g.font = "30px Verdana";
+                                g.fillStyle = 'black';
+                                g.fillText(canvasSvgThird, 830, 50);
+                            }
+                            , 50);
                         break;
                     case 3:
                         cD.destroy();
+                        arcForZR.destory();
                         clearInterval(third);
+
                         break;
                 }
             }
@@ -342,7 +358,7 @@ window.onload = function () {
     first = setInterval(function () {
         newLine();
         newText();
-    }, 30)
+    }, 16)
     window.onmousemove = movingevent;
     window.onclick = clickEvent;
 

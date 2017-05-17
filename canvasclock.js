@@ -141,7 +141,5 @@ var cD = {
     },
     destroy:function(){
         clearInterval(draw);
-
-
     }
 };
