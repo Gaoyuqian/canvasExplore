@@ -10,9 +10,11 @@ var arcForZR = {
     defaultSelect: '',
     moving: false,
     sxArray:[],
+    color : ['red', 'green', 'orange', 'gold'],
 
 
-    arc: function (x, y, radiu, color) {
+
+arc: function (x, y, radiu, color) {
         this.x = x;
         this.y = y;
         this.radius = radiu;
@@ -22,7 +24,7 @@ var arcForZR = {
 
 
     addarc: function () {
-        var shan = new arcForZR.arc(getRandom(400, 1400), getRandom(400, 800), getRandom(10, 30), '#ff5700');
+        var shan = new arcForZR.arc(getRandom(400, 1400), getRandom(400, 800), getRandom(10, 30), arcForZR.color[getRandom(0,3)]);
         arcForZR.sxArray.push(shan);
         arcForZR.drawarc();
 
@@ -32,7 +34,7 @@ var arcForZR = {
     drawarc: function () {
         var canvas = document.getElementById('arc');
         var g = canvas.getContext('2d');
-        g.clearRect(0, 0, 1000, 1000);
+        g.clearRect(0, 0, 2000, 2000);
         for (var i = 0; i < arcForZR.sxArray.length; i++) {
             var arc = arcForZR.sxArray[i];
             g.beginPath();
@@ -81,6 +83,7 @@ var arcForZR = {
                 var y = e.pageY - canvas.offsetTop;
                 arcForZR.defaultSelect.x = x;
                 arcForZR.defaultSelect.y = y;
+                console.log(arcForZR.sxArray);
                 arcForZR.drawarc();
             }
         }
