@@ -57,7 +57,7 @@ var bing = {
     }
 }
 window.onload = function(){
-    bing.init([{'name': '蚂蚁金服', 'value': 3333}, {'name': '饿了么', 'value': 3333}, {
+    bing.init([{'name': '蚂蚁金服', 'value': 3333}, {'name': '饿了么', 'value': 3333},{'name': '饿了么', 'value': 3333},{'name': '饿了么', 'value': 3333}, {
         'name': '百度贴吧',
         'value': 2222
     }])

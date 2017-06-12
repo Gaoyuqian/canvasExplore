@@ -3,18 +3,18 @@
  */
 
 
-
+var canvas = document.getElementById('arc');
+var g = canvas.getContext('2d');
 
 
 var arcForZR = {
     defaultSelect: '',
     moving: false,
-    sxArray:[],
-    color : ['red', 'green', 'orange', 'gold'],
+    sxArray: [],
+    color: ['red', 'green', 'orange', 'gold'],
 
 
-
-arc: function (x, y, radiu, color) {
+    arc: function (x, y, radiu, color) {
         this.x = x;
         this.y = y;
         this.radius = radiu;
@@ -24,16 +24,16 @@ arc: function (x, y, radiu, color) {
 
 
     addarc: function () {
-        var shan = new arcForZR.arc(getRandom(400, 1400), getRandom(400, 800), getRandom(10, 30), arcForZR.color[getRandom(0,3)]);
+        var shan = new arcForZR.arc(arcForZR.getRandom(0, 800),arcForZR.getRandom(0, 400), arcForZR.getRandom(10, 30), arcForZR.color[arcForZR.getRandom(0, 3)]);
         arcForZR.sxArray.push(shan);
         arcForZR.drawarc();
 
     },//添加扇形元素
 
-
+    getRandom: function (from, to) {
+        return Math.floor(Math.random() * (to - from + 1) + from);
+    },//获取随机坐标
     drawarc: function () {
-        var canvas = document.getElementById('arc');
-        var g = canvas.getContext('2d');
         g.clearRect(0, 0, 2000, 2000);
         for (var i = 0; i < arcForZR.sxArray.length; i++) {
             var arc = arcForZR.sxArray[i];
@@ -45,7 +45,7 @@ arc: function (x, y, radiu, color) {
             g.stroke();
         }
 
-        if(arcForZR.sxArray.length>=10){
+        if (arcForZR.sxArray.length >= 10) {
             arcForZR.destory();
         }
         canvas.onmousedown = arcForZR.clickEvent;
@@ -57,7 +57,6 @@ arc: function (x, y, radiu, color) {
     clickEvent: function (e) {
         var clickX = e.pageX - canvas.offsetLeft;
         var clickY = e.pageY - canvas.offsetTop;
-        console.log(clickX,clickY)
 
         for (var i = arcForZR.sxArray.length - 1; i >= 0; i--) {
             var arc = arcForZR.sxArray[i];
@@ -71,8 +70,6 @@ arc: function (x, y, radiu, color) {
                 arcForZR.defaultSelect = arc;
                 arc.isSelected = true; //若在 改变对象的属性
                 arcForZR.moving = true;
-                console.log(distanceFromCenter,arc)
-
             }
         }
     },
@@ -83,7 +80,6 @@ arc: function (x, y, radiu, color) {
                 var y = e.pageY - canvas.offsetTop;
                 arcForZR.defaultSelect.x = x;
                 arcForZR.defaultSelect.y = y;
-                console.log(arcForZR.sxArray);
                 arcForZR.drawarc();
             }
         }
@@ -106,7 +102,5 @@ arc: function (x, y, radiu, color) {
 // 画出元素
 
 
-//window.onload = function () {
-//    console.log(arc)
-//    setInterval(arc.addarc, 200);
-//}
+window.onload = function () {
+}

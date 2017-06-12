@@ -136,11 +136,8 @@ function moveEvent(e) {
 }
 
 window.onload = function () {
-    drawBing([{'name': '蚂蚁金服', 'value': 3333}, {'name': '饿了么', 'value': 3333}, {
+    drawBing([{'name': '蚂蚁金服', 'value': 3333},{'name': '蚂蚁金服', 'value': 3333},{'name': '蚂蚁金服', 'value': 3333}, {'name': '饿了么', 'value': 3333}, {
         'name': '百度贴吧',
         'value': 2222
-    }, {'name': '京东', 'value': 5555}, {'name': '京东', 'value': 5555}, {'name': '京东', 'value': 5555}, {
-        'name': '淘宝',
-        'value': 2342
-    }, {'name': '知乎', 'value': 3212}], true);
+    }, {'name': '京东', 'value': 5555}], true);
 }

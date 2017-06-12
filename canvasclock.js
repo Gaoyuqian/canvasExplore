@@ -142,4 +142,5 @@ var cD = {
     destroy:function(){
         clearInterval(draw);
     }
+    //cD.init(200, 200, 200, 'main');
 };

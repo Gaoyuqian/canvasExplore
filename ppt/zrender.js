@@ -4,9 +4,10 @@
 /*
  模仿zrender首页动画
  */
+var div =document.getElementsByClassName('haha');
+console.log(div[0].clientWidth);
 var canvas = document.getElementById('zrender');
 var g = canvas.getContext('2d');
-var body = document.getElementsByTagName('body');
 var canvas1 = document.getElementById('zrender1');
 var gg = canvas1.getContext('2d');
 var canvas2 = document.getElementById('zrender2');
@@ -15,6 +16,11 @@ var canvas3 = document.getElementById('zrender3');
 var gggg = canvas3.getContext('2d');
 var canvas4 = document.getElementById('arc');
 var ggggg = canvas4.getContext('2d');
+canvas.width = div[0].clientWidth;
+canvas1.width = div[0].clientWidth;
+canvas2.width = div[0].clientWidth;
+canvas3.width = div[0].clientWidth;
+canvas4.width = div[0].clientWidth;
 //zrender动画开始
 var lineArray = [];
 var textArray = [];
@@ -318,7 +324,7 @@ function clickEvent(e) {
                             g.beginPath();
                             g.font = "30px Verdana";
                             g.fillStyle = 'black';
-                            g.fillText(canvasSvgSecond, 830, 50);
+                            g.fillText(canvasSvgSecond, canvas.width/2-160, 50);
                         }, 50);
                         break;
                     case 2:
@@ -334,7 +340,7 @@ function clickEvent(e) {
                                 g.beginPath();
                                 g.font = "30px Verdana";
                                 g.fillStyle = 'black';
-                                g.fillText(canvasSvgThird, 830, 50);
+                                g.fillText(canvasSvgThird, canvas.width/2-160, 50);
                             }
                             , 50);
                         break;

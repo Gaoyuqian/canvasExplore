@@ -24,6 +24,9 @@
     top: 100px;
     right:0;
 }
+div{
+    width:100%;
+}
 *{
     padding:0;
     margin:0;
