@@ -4,8 +4,11 @@
 define(function (require) {
 
     var base = function () {
-        this.eventArray = [];
+        if(this.eventArray){
 
+        }else{
+            this.eventArray = [];
+        }
     }
     base.prototype = {
         constructor: base,
@@ -16,7 +19,8 @@ define(function (require) {
             this.eventArray = [];
         },
         getEventArray: function () {
-            return this
+            console.log(this);
+            return this.eventArray;
         }
     }
     return base;

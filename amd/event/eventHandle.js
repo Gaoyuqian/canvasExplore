@@ -2,9 +2,6 @@
  * Created by yuqiangao on 2017/5/15.
  */
 define(function (require) {
-    var baseModel = require('./../base/base')
-    var base = new baseModel();
-    var redrwaA =  base.getEventArray();
     var isPath = function (ac, clickX, clickY, i) {
         if (ac.single) {
             if (g.isPointInPath(clickX, clickY)) {
@@ -37,7 +34,18 @@ define(function (require) {
         }
     }
     var onClick = function (e) {
+        var baseModel = require('./../base/base')
 
+        var base = new baseModel();
+
+
+        //发现问题
+        //  arc.js中push到base.eventArray数组中的数并不能在其他页面访问
+        var redrwaA =  base.eventArray;
+        console.log(base.eventArray);
+
+        var canvas = e.target;
+        var g = canvas.getContext('2d');
 
         //引入main的redraw  =>main的redraw指向各模块的redraw
         //只判断是否在path上

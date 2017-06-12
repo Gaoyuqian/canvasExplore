@@ -10,10 +10,10 @@ define(function (require) {
      *
      */
 
+    var main = require('./main/main');
 
     var initArc = require('./drawPath/arc');
     var initRect = require('./drawPath/rect');
-    var main = require('./main/main');
     var myPh = new main();
     myPh.addSharp(new initRect({
         x: 444, y: 344, width: 100, height: 100, color: 'gold', canSelected: true
