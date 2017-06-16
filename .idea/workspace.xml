@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a5d0d349-941e-4dfd-9180-4670aca61dca" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amd/base/base.js" afterPath="$PROJECT_DIR$/amd/base/base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amd/drawPath/arc.js" afterPath="$PROJECT_DIR$/amd/drawPath/arc.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amd/event/eventHandle.js" afterPath="$PROJECT_DIR$/amd/event/eventHandle.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amd/phoenix.js" afterPath="$PROJECT_DIR$/amd/phoenix.js" />
-    </list>
+    <list default="true" id="a5d0d349-941e-4dfd-9180-4670aca61dca" name="Default" comment="" />
     <ignored path="canvasDemo.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -91,7 +86,7 @@
       <file leaf-file-name="eventHandle.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/amd/event/eventHandle.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62030077">
+            <state vertical-scroll-proportion="0.48872182">
               <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
               <folding />
             </state>
@@ -454,7 +449,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/amd/event/eventHandle.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62030077">
+        <state vertical-scroll-proportion="0.48872182">
           <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
           <folding />
         </state>
