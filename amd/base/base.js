@@ -3,15 +3,16 @@
  */
 define(function (require) {
 
+    // 为事件服务？？？
     var base = function () {
-        if(this.eventArray){
-
-        }else{
+        if (this.eventArray) {
+        } else {
             this.eventArray = [];
         }
     }
     base.prototype = {
         constructor: base,
+        eventArray: [],
         add: function (_this) {
             this.eventArray.push(_this);
         },
@@ -19,7 +20,6 @@ define(function (require) {
             this.eventArray = [];
         },
         getEventArray: function () {
-            console.log(this);
             return this.eventArray;
         }
     }
