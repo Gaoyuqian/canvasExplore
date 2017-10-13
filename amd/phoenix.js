@@ -9,9 +9,13 @@ define(function (require) {
      */
 
     var main = require('./main/main');
+    var event = require('./event/eventHandle');
     var initArc = require('./drawPath/arc');
     var initRect = require('./drawPath/rect');
+    var ph = require('./init/init');
     var myPh = new main();
+    var canvas = new ph('main').create();
+
     myPh.addSharp(new initRect({
         x: 444, y: 344, width: 100, height: 100, color: 'red', canSelected: true
     }));
@@ -22,6 +26,9 @@ define(function (require) {
         x: 111, y: 111, r: 100, color: 'black', canSelected: true, single: false
     }));
     myPh.draw();
+    canvas.onclick = event.onClickCopy(function () {
+        console.log(this);
+    });
     //window.myPh = myPh;
 });
 

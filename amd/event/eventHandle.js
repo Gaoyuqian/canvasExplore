@@ -3,6 +3,12 @@
  */
 define(function (require) {
     var g, reDraw;
+    var baseModel = require('./../base/base');
+    var main = require('./../main/main');
+    var myPh = new main();
+    var base = new baseModel();
+    reDraw = base.eventArray;
+    console.log(base.eventArray);
     var isPath = function (ac, clickX, clickY, i) {//单选不能和任何其他形式共存，多选可以和多选共存。
         if (!!ac.single) {
             if (g.isPointInPath(clickX, clickY)) {
@@ -34,19 +40,13 @@ define(function (require) {
         return ac
     };
     var onClick = function (e) {
-        var baseModel = require('./../base/base');
-        var main = require('./../main/main');
-        var myPh = new main();
-        var base = new baseModel();
-        reDraw = base.eventArray;
-        console.log(base.eventArray);
         var canvas = e.target;
         g = canvas.getContext('2d');
         //引入main的redraw  =>main的redraw指向各模块的redraw
         //只判断是否在path上
         //点击事件 mouseup mousedown 可以提供外部方法接口
         //moving事件只修改x，y坐标值进行重绘
-        //点击事件兼顾重绘功能
+        //点击事件兼顾重绘z功能
         //不同path的不同事件如何叠加混合
         var clickX = e.pageX - canvas.offsetLeft;
         var clickY = e.pageY - canvas.offsetTop;
@@ -71,7 +71,15 @@ define(function (require) {
             g.fillStyle = ac.newColor || ac.color;
             g.fill();
         }
-    }
-    return {onClick: onClick}
+    };
+    var onClickCopy = function (fn) {//需修改事件绑定机制  或由用户手动修改
+        //事件绑定无法获取this  所以需要绑定到相应的图形对象上～
+        if (Object.prototype.toString.call(fn) === "[object Function]") {
+            //高介函数
+            reDraw.map(fn);
+        }
+        return false;
+    };
+    return {onClick: onClick, onClickCopy: onClickCopy}
 
 })
