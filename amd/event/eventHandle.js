@@ -5,12 +5,7 @@
 
 define(function (require) {
     var g;
-    var init = require('../init/init');
     //当触发全局点击事件时，触发该点击事件
-    //need  x y canvas
-    //const can = new main('main');
-    //const canvas = new init('main').create();
-    //const g = canvas.getContext('2d');
     const isPath = function (x, y, can) {
 
     }

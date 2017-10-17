@@ -25,7 +25,6 @@ define(function (require) {
     }
     return {
         addEventArray: addEventArray,
-        //eventArray: eventArray,
         addEvent: addEvent,
         removeEventArray: removeEventArray
     };
