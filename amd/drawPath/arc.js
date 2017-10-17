@@ -1,10 +1,8 @@
 define(function (require) {
     var arcArray = [];//有留着的必要  辅助event代码的编写
     var event = require('./../event/eventHandle')
-    var baseModel = require('./../base/base')
-    var ph = require('./../init/init');
-    var base = new baseModel();
-    var canvas = new ph('main').create();
+    //var baseModel = require('./../base/base')
+    //var base = new baseModel();
     var arc = function arc(option) {
         this.x = option.x;  //x
         this.y = option.y;  //y
@@ -18,19 +16,19 @@ define(function (require) {
         this.canSelected = option.canSelected || false;  //是否可以被选中
         this.beginAngle = 0;
         this.endAngle = 2 * this.jindu;
+        this.onclick = option.onclick;
+        this.onmousedown = option.onmousedown;
+        this.onmouseup = option.onmouseup;
+
     };
 
     arc.prototype = {
         constructor: arc,
-        draw: function () {
-            const g = canvas.getContext('2d');
+        draw: function (can) {
+            const g = can.getContext('2d');
             g.beginPath();
             g.fillStyle = this.newColor || this.color;
             g.arc(this.x, this.y, this.r, this.beginAngle, this.endAngle * Math.PI);
-            if (this.canSelected) {
-                canvas.onclick = event.onClick;
-                base.eventArray.push(this);
-            }
             g.fill();
             return this
         },

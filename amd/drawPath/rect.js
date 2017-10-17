@@ -6,10 +6,8 @@ define(function (require) {
      * 矩形
      */
     var event = require('./../event/eventHandle');
-    var baseModel = require('./../base/base');
-    var ph = require('./../init/init');
-    var base = new baseModel();
-    var canvas = new ph('main').create();
+    //var baseModel = require('./../base/base');
+    //var base = new baseModel();
     var rect = function (option) {
         this.x = option.x;
         this.y = option.y;
@@ -25,16 +23,12 @@ define(function (require) {
 
     rect.prototype = {
         constructor: rect,
-        draw: function () {
-            var g = canvas.getContext('2d');
+        draw: function (can) {
+            var g = can.getContext('2d');
             g.beginPath();
             g.rect(this.x, this.y, this.width, this.height);
             g.lineWidth = this.lineWidth || 1;
             g.fillStyle = this.color || 'black';
-            if (this.canSelected) {
-                canvas.onclick = event.onClick;
-                base.eventArray.push(this);
-            }
             g.fill();
         }
     };
