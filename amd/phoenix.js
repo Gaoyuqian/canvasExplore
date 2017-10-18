@@ -20,7 +20,7 @@ define(function (require) {
     myPh.addSharp(new initRect({
         x: 444, y: 344, width: 100, height: 100, color: 'red', canSelected: true, onclick: function () {
             console.log(this)
-        }
+        },canMoving: true,
     }));
     myPh.addSharp(new initArc({
         x: 122, y: 122, r: 100, color: 'green', canSelected: true, single: true, onclick: function () {

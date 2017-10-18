@@ -14,6 +14,8 @@ define(function (require) {
         this.single = option.single;  //是否单选
         this.canSelected = option.canSelected;  //是否可以被选中
         this.onclick = option.onclick;
+        this.willMoving = false;
+        this.canMoving = option.canMoving;
     };
 
     rect.prototype = {
@@ -29,6 +31,13 @@ define(function (require) {
         init: function () {
             g.rect(this.x, this.y, this.width, this.height);
         },
+        //moveDraw:function(){
+        //    g.beginPath();
+        //    g.rect(this.x-this.width, this.y-this.height, this.width, this.height);
+        //    g.lineWidth = this.lineWidth || 1;
+        //    g.fillStyle = this.color || 'black';
+        //    g.fill();
+        //}
     };
 
     return rect
