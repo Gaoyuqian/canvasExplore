@@ -12,7 +12,6 @@ define(function (require) {
             window.onmousemove = eventHandle.onmousemove
         }
     }
-    //const eventArray = [];
     const removeEventArray = function () {
         eventHandle.eventArray.length = 0;
     }
@@ -21,6 +20,7 @@ define(function (require) {
             if (arg[i].canSelected) {
                 eventHandle.eventArray.push(arg[i]);
             }
+            eventHandle.eventArray.reverse();
         }
     }
     return {

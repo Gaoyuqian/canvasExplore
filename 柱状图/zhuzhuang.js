@@ -5,11 +5,11 @@
 
 var test = {
     o: {'x': 100, 'y': 700},
-    offset: {'x': 700, 'y': 400},
-    rectWidth: 70,
+    offset: {'x': 400, 'y': 301},
+    rectWidth: 50,
     jianju: 10,
     beishu: 1,
-    info: [{'name': '淘宝', 'value': 220}, {'name': '淘宝', 'value': 220}, {'name': '淘宝', 'value': 220}, {
+    info: [{'name': '淘宝', 'value': 10}, {'name': '淘宝', 'value': 220}, {'name': '淘宝', 'value': 220}, {
         'name': '淘宝',
         'value': 220
     }, {'name': '美团', 'value': 158}, {'name': '百度', 'value': 378}]

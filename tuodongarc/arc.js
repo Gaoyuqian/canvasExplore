@@ -103,4 +103,11 @@ var arcForZR = {
 
 
 window.onload = function () {
+    arcForZR.addarc();
+    arcForZR.addarc();
+    arcForZR.addarc();
+    arcForZR.addarc();
+    arcForZR.addarc();
+    arcForZR.addarc();
+
 }
