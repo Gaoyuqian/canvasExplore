@@ -23,10 +23,14 @@ define(function (require) {
         }
     }));
     myPh.addSharp(new initArc({
-        x: 122, y: 122, r: 100, color: 'green', canSelected: true, single: true
+        x: 122, y: 122, r: 100, color: 'green', canSelected: true, single: true,onclick:function(){
+            console.log('456')
+        }
     }));
     myPh.addSharp(new initArc({
-        x: 111, y: 111, r: 100, color: 'black', canSelected: true, single: false
+        x: 111, y: 111, r: 100, color: 'black', canSelected: true, single: false,onclick:function(){
+            console.log('789')
+        }
     }));
     myPh.draw();
     //当window点击事件触发时，会进行判断是否在某个图形上， 默认给全局绑定一个同一个事件 该事件触发时会判断当前点击区域位于哪个sharp上，

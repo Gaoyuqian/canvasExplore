@@ -19,18 +19,19 @@ define(function (require) {
         this.isSelected = false;  //被选中状态
         this.single = option.single;  //是否单选
         this.canSelected = option.canSelected;  //是否可以被选中
+        this.onclick = option.onclick;
     };
 
     rect.prototype = {
         constructor: rect,
         draw: function (can) {
-            var g = can.getContext('2d');
+            const g = can.getContext('2d');
             g.beginPath();
             g.rect(this.x, this.y, this.width, this.height);
             g.lineWidth = this.lineWidth || 1;
             g.fillStyle = this.color || 'black';
             g.fill();
-        }
+        },
     };
 
     return rect
