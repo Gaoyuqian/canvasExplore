@@ -18,7 +18,7 @@ define(function (require) {
             this.mainArray.push(v);
         },
         draw: function () {
-            base.addEvent();
+            base.addEvent(this);
             base.addEventArray(this.mainArray);
             for (var i in this.mainArray) {
                 this.mainArray[i].draw(this.canvas);

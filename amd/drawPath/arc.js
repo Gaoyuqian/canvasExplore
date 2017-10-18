@@ -1,8 +1,4 @@
 define(function (require) {
-    var arcArray = [];//有留着的必要  辅助event代码的编写
-    var event = require('./../event/eventHandle')
-    //var baseModel = require('./../base/base')
-    //var base = new baseModel();
     var arc = function arc(option) {
         this.x = option.x;  //x
         this.y = option.y;  //y
@@ -25,16 +21,16 @@ define(function (require) {
     arc.prototype = {
         constructor: arc,
         draw: function (can) {
-            const g = can.getContext('2d');
+            g = can.getContext('2d');
             g.beginPath();
             g.fillStyle = this.newColor || this.color;
             g.arc(this.x, this.y, this.r, this.beginAngle, this.endAngle * Math.PI);
             g.fill();
             return this
         },
-        redraw: function (x, y) {
+        init: function () {
             g.arc(this.x, this.y, this.r, this.beginAngle, this.endAngle * Math.PI);
         }
-    }
+    };
     return arc
 });

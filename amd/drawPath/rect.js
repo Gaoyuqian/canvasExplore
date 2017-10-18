@@ -2,12 +2,6 @@
  * Created by yuqiangao on 2017/5/15.
  */
 define(function (require) {
-    /*
-     * 矩形
-     */
-    var event = require('./../event/eventHandle');
-    //var baseModel = require('./../base/base');
-    //var base = new baseModel();
     var rect = function (option) {
         this.x = option.x;
         this.y = option.y;
@@ -25,12 +19,15 @@ define(function (require) {
     rect.prototype = {
         constructor: rect,
         draw: function (can) {
-            const g = can.getContext('2d');
+            g = can.getContext('2d');
             g.beginPath();
             g.rect(this.x, this.y, this.width, this.height);
             g.lineWidth = this.lineWidth || 1;
             g.fillStyle = this.color || 'black';
             g.fill();
+        },
+        init: function () {
+            g.rect(this.x, this.y, this.width, this.height);
         },
     };
 

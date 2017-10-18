@@ -19,17 +19,17 @@ define(function (require) {
     console.log(myPh);
     myPh.addSharp(new initRect({
         x: 444, y: 344, width: 100, height: 100, color: 'red', canSelected: true, onclick: function () {
-            console.log('123')
+            console.log(this)
         }
     }));
     myPh.addSharp(new initArc({
-        x: 122, y: 122, r: 100, color: 'green', canSelected: true, single: true,onclick:function(){
-            console.log('456')
+        x: 122, y: 122, r: 100, color: 'green', canSelected: true, single: true, onclick: function () {
+            console.log(this);
         }
     }));
     myPh.addSharp(new initArc({
-        x: 111, y: 111, r: 100, color: 'black', canSelected: true, single: false,onclick:function(){
-            console.log('789')
+        x: 111, y: 111, r: 100, color: 'black', canSelected: true, single: false, onclick: function () {
+            console.log(this);
         }
     }));
     myPh.draw();

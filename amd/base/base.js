@@ -4,12 +4,12 @@
 define(function (require) {
     var eventHandle = require('../event/eventHandle');
     // 为事件服务
-    const addEvent = function () {
-        if (!window.onclick) {
-            window.onclick = eventHandle.onclick
+    const addEvent = function (self) {
+        if (!self.canvas.onclick) {
+            self.canvas.onclick = eventHandle.onclick
         }
-        if (!window.onmousemove) {
-            window.onmousemove = eventHandle.onmousemove
+        if (!self.canvas.onmousemove) {
+            self.canvas.onmousemove = eventHandle.onmousemove
         }
     }
     const removeEventArray = function () {

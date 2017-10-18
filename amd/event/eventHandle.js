@@ -25,29 +25,20 @@ define(function (require) {
         const clickY = e.pageY - canvas.offsetTop;
         for (var i in eventArray) {
             g.beginPath();
-            const ac = eventArray[i];
-            switch (ac.name) {
-                case 'arc':
-                    g.arc(ac.x, ac.y, ac.r, 0, 2 * Math.PI);
-                    if (isPath(ac, clickX, clickY)) {
-                        ac.onclick();
-                        return;
-                    }
-                    break;
-                case 'rect':
-                    g.rect(ac.x, ac.y, ac.width, ac.height);
-                    g.lineWidth = ac.lineWidth || 1;
-                    if (isPath(ac, clickX, clickY)) {
-                        ac.onclick();
-                        return;
-                    }
-                    break;
+            eventArray[i].init();
+            if (isPath(eventArray[i], clickX, clickY)) {
+                eventArray[i].onclick();
+                return;
             }
-
         }
-        //捕获坐标 判断是否在图形上
+    };
+    const onmousedown = function () {
+
     };
     const onmousemove = function () {
+
+    };
+    const onmouseup = function () {
 
     };
     const eventArray = [];
