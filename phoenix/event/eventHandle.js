@@ -68,7 +68,6 @@ define(function (require) {
         eventArray.forEach(function (item) {
             item.willMoving = false;
         })
-        console.log(eventArray)
     };
     const eventArray = [];
     const ReEventArray = [];

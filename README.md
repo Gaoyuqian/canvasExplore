@@ -1,4 +1,4 @@
-# canvasExplore
+# phoenix
 包含了<br /> 
 从0开始<br /> 
 对canvas的探索过程<br /> 
