@@ -3,9 +3,7 @@ define(function (require) {
     //当触发全局点击事件时，触发该点击事件
     const isPath = function (pathArr, clickX, clickY, g) {
         // 返回所有图形中  onPath的第一个图形 然后调用图形相对应的事件。
-        //return g.isPointInPath(clickX, clickY)
-        console.log(pathArr);
-        var tempArr =[];
+        var tempArr = [];
         for (var item = pathArr.length - 1; item >= 0; item--) {
             tempArr.push(pathArr[item]);
         }
@@ -40,7 +38,7 @@ define(function (require) {
     };
     const onclick = function (e, canvas, pathArr, x, y) {
         const g = canvas.getContext('2d');
-        console.log(isPath(pathArr, x, y, g));
+        isPath(pathArr, x, y, g)&&isPath(pathArr, x, y, g).onclick();
     };
     const onmousedown = function (e) {
         const canvas = e.target;

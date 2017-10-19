@@ -23,10 +23,11 @@ define(function (require) {
         }, canMoving: true
     }));
     myPh.addSharp(new initArc({
-        x: 111, y: 111, r: 100, color: 'black', canSelected: true, single: false, onclick: function () {
+        x: 111, y: 111, r: 100, color: 'pink', canSelected: true, single: false, onclick: function () {
             console.log(this);
         }, canMoving: true
     }));
+
     myPh.draw();
 
     myPh.on('click', function (e) {

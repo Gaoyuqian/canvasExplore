@@ -1,7 +1,15 @@
-body{
-    width:100%;
-    height:1000px;
+body {
+    width: 100%;
+    height: 1000px;
 }
-canvas{
+
+canvas {
     display: inline-block;
+}
+
+.test {
+    border: 1px solid black;
+    height: 40px;
+    width: 130px;
+
 }
