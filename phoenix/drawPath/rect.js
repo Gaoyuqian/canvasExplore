@@ -15,6 +15,7 @@ define(function (require) {
         this.canSelected = option.canSelected;  //是否可以被选中
         this.onclick = option.onclick;
         this.willMoving = false;
+        this.strokeStyle = option.strokeStyle;
         this.canMoving = option.canMoving;
     };
 
@@ -25,19 +26,14 @@ define(function (require) {
             g.beginPath();
             g.rect(this.x, this.y, this.width, this.height);
             g.lineWidth = this.lineWidth || 1;
+            g.strokeStyle = this.strokeStyle || 'black';
             g.fillStyle = this.color || 'black';
+            g.stroke();
             g.fill();
         },
         init: function () {
             g.rect(this.x, this.y, this.width, this.height);
         },
-        //moveDraw:function(){
-        //    g.beginPath();
-        //    g.rect(this.x-this.width, this.y-this.height, this.width, this.height);
-        //    g.lineWidth = this.lineWidth || 1;
-        //    g.fillStyle = this.color || 'black';
-        //    g.fill();
-        //}
     };
 
     return rect

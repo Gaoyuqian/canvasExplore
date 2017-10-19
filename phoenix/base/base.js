@@ -4,6 +4,7 @@
 define(function (require) {
     var eventHandle = require('../event/eventHandle');
     // 为事件服务
+    // 拖拽，事件分离？？？
     const addEvent = function (self) {
         if (!self.canvas.onclick) {
             self.canvas.onclick = eventHandle.onclick
@@ -30,7 +31,6 @@ define(function (require) {
         for (var item = eventHandle.eventArray.length - 1; item >= 0; item--) {
             eventHandle.ReEventArray.push( eventHandle.eventArray[item]);
         }
-        console.log(eventHandle.ReEventArray)
     };
     return {
         addEventArray: addEventArray,

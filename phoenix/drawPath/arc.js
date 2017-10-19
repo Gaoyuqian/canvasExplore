@@ -31,16 +31,7 @@ define(function (require) {
         },
         init: function () {
             g.arc(this.x, this.y, this.r, this.beginAngle, this.endAngle * Math.PI);
-        },
-        //moveDraw: function (can) {
-        //    g = can.getContext('2d');
-        //    g.beginPath();
-        //    g.fillStyle = this.newColor || this.color;
-        //    g.arc(this.x, this.y, this.r, this.beginAngle, this.endAngle * Math.PI);
-        //    g.fill();
-        //    return this
-        //},
-
+        }
     };
     return arc
 });

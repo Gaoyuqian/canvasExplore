@@ -3,8 +3,7 @@
  */
 define(function (require) {
     var mainCanvas = require('../init/init');
-    var base = require('../base/base');
-    //var eventHandle = require('../event/eventHandle');
+    var eventHandle = require('../event/eventHandle');
     var main = function (canvas) {
         //每一个实例对应一个canvas
         this.canvas = new mainCanvas(canvas).create();
@@ -18,20 +17,21 @@ define(function (require) {
             this.mainArray.push(v);
         },
         draw: function () {
-            base.addEvent(this);
-            base.addEventArray(this.mainArray);
-            for (var i in this.mainArray) {
+            for (var i in this.mainArray.reverse()) {
                 this.mainArray[i].draw(this.canvas);
             }
         },
-        //清空  //待填坑
-        clear: function () {
-            this.mainArray = [];
-            this.draw();
-        },
-        //开始挖坑
-        redraw: function () {//基于事件event的重绘函数
-
+        on: function (eventName, callback) {
+            const _this = this;
+            const callFn = function (e) {
+                // 加入自己的东西
+                if (eventName == 'click') {
+                    eventHandle.onclick(e, _this.canvas, _this.mainArray, e.pageX - _this.canvas.offsetLeft, e.pageY - _this.canvas.offsetTop);
+                }
+                //不推荐绑定其他事件
+                callback(e);
+            }
+            this.canvas.addEventListener(eventName, callFn, false);
         }
     };
     return main;

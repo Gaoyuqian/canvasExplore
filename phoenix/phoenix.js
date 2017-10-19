@@ -9,30 +9,31 @@ define(function (require) {
      */
 
     var main = require('./main/main');
-    //var event = require('./event/eventHandle');
     var initArc = require('./drawPath/arc');
     var initRect = require('./drawPath/rect');
-    //var ph = require('./init/init');
     var myPh = new main('main');
-    //var canvas = new ph('main').create();
-
-    console.log(myPh);
     myPh.addSharp(new initRect({
-        x: 444, y: 344, width: 100, height: 100, color: 'red', canSelected: true, onclick: function () {
+        x: 444, y: 344, width: 100, height: 100, color: 'gold', canSelected: true, onclick: function () {
             console.log(this)
-        },canMoving: true,
+        }, canMoving: true, lineWidth: 20
     }));
     myPh.addSharp(new initArc({
-        x: 122, y: 122, r: 100, color: 'green', canSelected: true, single: true, onclick: function () {
+        x: 133, y: 133, r: 100, color: 'green', canSelected: true, single: true, onclick: function () {
             console.log(this);
-        },canMoving: true,
+        }, canMoving: true
     }));
     myPh.addSharp(new initArc({
         x: 111, y: 111, r: 100, color: 'black', canSelected: true, single: false, onclick: function () {
             console.log(this);
-        },canMoving: true,
+        }, canMoving: true
     }));
     myPh.draw();
+
+    myPh.on('click', function (e) {
+        console.log('我被点击啦！！！', e)
+    });
+
+
     //当window点击事件触发时，会进行判断是否在某个图形上， 默认给全局绑定一个同一个事件 该事件触发时会判断当前点击区域位于哪个sharp上，
     // 并以先画出来的优先处理 然后执行该对象的对应事件方法
     //画布实例化应该放在一个文件下然后均引用该实例

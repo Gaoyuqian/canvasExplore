@@ -2,13 +2,13 @@
  * Created by yuqiangao on 2017/5/15.
  */
 /*
-        获取canvas dom节点
-*/
+ 获取canvas dom节点
+ */
 define(function (require) {
-    var init = function(name){
+    var init = function (name) {
         this.name = name
     }
-    init.prototype.create = function(){
+    init.prototype.create = function () {
         var zj = document.getElementById(this.name);
         if (document.getElementById(this.name + '-canvas')) {
             var canvas = document.getElementById(this.name + '-canvas');
@@ -20,6 +20,6 @@ define(function (require) {
             zj.appendChild(canvas);
         }
         return canvas
-    }
+    };
     return init;
 });
