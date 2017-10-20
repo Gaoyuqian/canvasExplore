@@ -8,7 +8,7 @@ var test = {
     offset: {'x': 400, 'y': 301},
     rectWidth: 50,
     jianju: 10,
-    beishu: 1,
+    beishu: 2,
     info: [{'name': '淘宝', 'value': 10}, {'name': '淘宝', 'value': 220}, {'name': '淘宝', 'value': 220}, {
         'name': '淘宝',
         'value': 220

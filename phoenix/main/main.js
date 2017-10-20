@@ -17,6 +17,7 @@ define(function (require) {
             this.mainArray.push(v);
         },
         draw: function () {
+            //万物之源
             for (var i in this.mainArray.reverse()) {
                 this.mainArray[i].draw(this.canvas);
             }

@@ -11,27 +11,43 @@ define(function (require) {
     var main = require('./main/main');
     var initArc = require('./drawPath/arc');
     var initRect = require('./drawPath/rect');
+    var initSector = require('./drawPath/Sector');
     var myPh = new main('main');
     myPh.addSharp(new initRect({
         x: 444, y: 344, width: 100, height: 100, color: 'gold', canSelected: true, onclick: function () {
-            console.log(this)
+            console.log(this.name + '被点击啦');
         }, canMoving: true, lineWidth: 20
     }));
     myPh.addSharp(new initArc({
         x: 133, y: 133, r: 100, color: 'green', canSelected: true, single: true, onclick: function () {
-            console.log(this);
+            console.log(this.name + '被点击啦');
         }, canMoving: true
     }));
     myPh.addSharp(new initArc({
         x: 111, y: 111, r: 100, color: 'pink', canSelected: true, single: false, onclick: function () {
-            console.log(this);
+            console.log(this.name + '被点击啦');
         }, canMoving: true
+    }));
+    myPh.addSharp(new initSector({
+        x: 444,
+        y: 555,
+        r: 300,
+        color: 'blue',
+        startAngle: 20,
+        endAngle: 60,
+        canSelected: true,
+        single: false,
+        lineWidth:55,
+        onclick: function () {
+            console.log(this.color );
+        },
+        canMoving: true
     }));
 
     myPh.draw();
 
     myPh.on('click', function (e) {
-        console.log('我被点击啦！！！', e)
+        console.log('canvas被点击啦！！！', e)
     });
 
 
