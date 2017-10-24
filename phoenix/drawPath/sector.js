@@ -31,12 +31,9 @@ define(function (requier) {
             g.strokeStyle = this.color;
             //g.lineWidth = this.lineWidth || 0;
             g.lineTo(this.x, this.y);
-            g.arc(this.x, this.y, this.r, this.startAngle / 180 * Math.PI, this.endAngle / 180 * Math.PI, false);
+            g.arc(this.x, this.y, this.r, (this.startAngle - 90) / 180 * Math.PI, (this.endAngle - 90) / 180 * Math.PI, false);
             g.closePath();
-            g.stroke();
             g.fill();
-
-
             return this
         },
         init: function () {
